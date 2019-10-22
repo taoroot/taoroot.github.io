@@ -55,17 +55,17 @@
   };
 </script>
 
-  <meta name="description" content="从简单的使用，到对源码的解读 获取源码">
+  <meta name="description" content="为什么要用自定义协议？工作中，经常遇到使用企业内自定义的数据包格式, 而 netty 也提供了相关解码器， 尤其是物联网项目中，经常会遇到使用长连接与硬件24小时保持连接, 对于长连接其实可以直接用MQTT这种协议。为什么有些企业不使用这种通用的协议，而是要自定义协议呢？我觉得可能是开发简单（偷懒），如果硬件需要上网，就需要一个通信模块， 我知道的有SIM800C模块， 这种通信模块有一种透传模式">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Netty 使用与解读">
+<meta property="og:title" content="Netty 通用自定义协议框架 【更新中】">
 <meta property="og:url" content="https://zhiyi.im/2019/09/11/netty/index.html">
 <meta property="og:site_name" content="知一码源">
-<meta property="og:description" content="从简单的使用，到对源码的解读 获取源码">
+<meta property="og:description" content="为什么要用自定义协议？工作中，经常遇到使用企业内自定义的数据包格式, 而 netty 也提供了相关解码器， 尤其是物联网项目中，经常会遇到使用长连接与硬件24小时保持连接, 对于长连接其实可以直接用MQTT这种协议。为什么有些企业不使用这种通用的协议，而是要自定义协议呢？我觉得可能是开发简单（偷懒），如果硬件需要上网，就需要一个通信模块， 我知道的有SIM800C模块， 这种通信模块有一种透传模式">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-09-16T01:47:26.734Z">
+<meta property="og:updated_time" content="2019-10-22T12:12:47.637Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Netty 使用与解读">
-<meta name="twitter:description" content="从简单的使用，到对源码的解读 获取源码">
+<meta name="twitter:title" content="Netty 通用自定义协议框架 【更新中】">
+<meta name="twitter:description" content="为什么要用自定义协议？工作中，经常遇到使用企业内自定义的数据包格式, 而 netty 也提供了相关解码器， 尤其是物联网项目中，经常会遇到使用长连接与硬件24小时保持连接, 对于长连接其实可以直接用MQTT这种协议。为什么有些企业不使用这种通用的协议，而是要自定义协议呢？我觉得可能是开发简单（偷懒），如果硬件需要上网，就需要一个通信模块， 我知道的有SIM800C模块， 这种通信模块有一种透传模式">
   <link rel="canonical" href="https://zhiyi.im/2019/09/11/netty/">
 
 
@@ -80,7 +80,7 @@
   };
 </script>
 
-  <title>Netty 使用与解读 | 知一码源</title>
+  <title>Netty 通用自定义协议框架 【更新中】 | 知一码源</title>
   <meta name="generator" content="Hexo 3.9.0">
   
 
@@ -209,7 +209,7 @@
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="知一">
-      <meta itemprop="description" content="水火有气而无生 草木有生而无知 <br/>">
+      <meta itemprop="description" content="水火有气而无生 草木有生而无知">
       <meta itemprop="image" content="/images/qrcode.jpg">
     </span>
 
@@ -217,7 +217,7 @@
       <meta itemprop="name" content="知一码源">
     </span>
       <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">Netty 使用与解读
+        <h1 class="post-title" itemprop="name headline">Netty 通用自定义协议框架 【更新中】
 
           
         </h1>
@@ -244,7 +244,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2019-09-16 09:47:26" itemprop="dateModified" datetime="2019-09-16T09:47:26+08:00">2019-09-16</time>
+                <time title="修改时间：2019-10-22 20:12:47" itemprop="dateModified" datetime="2019-10-22T20:12:47+08:00">2019-10-22</time>
               </span>
             
           
@@ -268,23 +268,83 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>从简单的使用，到对源码的解读</p>
-<p><a href="https://github.com/taoroot/netty_demo" target="_blank" rel="noopener">获取源码</a></p>
+        <h1 id="为什么要用自定义协议？"><a href="#为什么要用自定义协议？" class="headerlink" title="为什么要用自定义协议？"></a>为什么要用自定义协议？</h1><p>工作中，经常遇到使用企业内自定义的数据包格式, 而 netty 也提供了相关解码器， 尤其是物联网项目中，经常会遇到使用长连接与硬件24小时保持连接, 对于长连接其实可以直接用MQTT这种协议。为什么有些企业不使用这种通用的协议，而是要自定义协议呢？我觉得可能是开发简单（偷懒），如果硬件需要上网，就需要一个通信模块， 我知道的有SIM800C模块， 这种通信模块有一种透传模式，硬件从串口的数据，都会被发送给事先设定好的ip:port, 并且硬件绝大多数开发都是采用的C语言，而C语言的中的结构体有一个特点，就是占用的内存等于结构体中的每一个变量所占内存的和，也就说，硬件如果直接把一个结构体直接发出来，那么服务端拿到的就是这个结构体二进制数组，硬件只要告诉你他的结构体，你就能 “拆” 出变量。</p>
+<p>这个框架不涉及到业务，重在理解。</p>
+<h1 id="源代地址"><a href="#源代地址" class="headerlink" title="源代地址"></a>源代地址</h1><p><a href="https://github.com/taoroot/netty_demo" target="_blank" rel="noopener">https://github.com/taoroot/netty_demo</a></p>
 <a id="more"></a>
 
-<h1 id="小试牛刀"><a href="#小试牛刀" class="headerlink" title="小试牛刀"></a>小试牛刀</h1><ol>
-<li><p>netty 服务端  <a href="https://github.com/taoroot/netty_demo/tree/master/src/main/java/cn/flizi/netty/firstdemo" target="_blank" rel="noopener">地址</a></p>
-<p> 一个HTTP服务器Demo，启动以后，浏览器访问localhost:8899， 看到打印 hello world .</p>
-</li>
-<li><p>客户端与服务端相互通讯 <a href="https://github.com/taoroot/netty_demo/tree/master/src/main/java/cn/flizi/netty/seconddemo" target="_blank" rel="noopener">地址</a></p>
-</li>
-<li><p>聊天室 <a href="https://github.com/taoroot/netty_demo/tree/master/src/main/java/cn/flizi/netty/thirddemo" target="_blank" rel="noopener">地址</a></p>
-</li>
-<li><p>空闲检查 <a href="https://github.com/taoroot/netty_demo/tree/master/src/main/java/cn/flizi/netty/fourthdemo" target="_blank" rel="noopener">地址</a></p>
-</li>
-</ol>
-<p># </p>
+<h1 id="数据包结构"><a href="#数据包结构" class="headerlink" title="数据包结构"></a>数据包结构</h1><table>
+<thead>
+<tr>
+<th>Tag</th>
+<th>Version</th>
+<th>Type</th>
+<th>Length</th>
+<th>Content</th>
+<th>CRC32</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0xAA</td>
+<td>0x01</td>
+<td>0x10</td>
+<td>0x000D</td>
+<td>“HELLO,WORLD”</td>
+<td>0xAB1F</td>
+</tr>
+</tbody></table>
+<table>
+<thead>
+<tr>
+<th>名称</th>
+<th>偏移位置</th>
+<th>长度</th>
+<th>值范围</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>包头</td>
+<td>0</td>
+<td>1</td>
+<td>固定 0xAA</td>
+</tr>
+<tr>
+<td>版本</td>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+</tr>
+<tr>
+<td>类型</td>
+<td>2</td>
+<td>1</td>
+<td>0-127</td>
+</tr>
+<tr>
+<td>数据长度</td>
+<td>3</td>
+<td>4</td>
+<td>数据字节数</td>
+</tr>
+<tr>
+<td>数据</td>
+<td>7</td>
+<td>n</td>
+<td>协议类型决定</td>
+</tr>
+<tr>
+<td>校验码</td>
+<td>n+7</td>
+<td>2</td>
+<td>类型、数据长度、数据 三部分的所有字节的CRC-16码</td>
+</tr>
+</tbody></table>
+<p>其实对于特定数据包，往往只要完成一个解码或者是完成编码就行。如果是硬件发送给你的数据包，那么你只要完成解码就行，如果是发送给硬件的，那么你只要完成编码就行。不过我一般都会完成编解码，主要是方便测试，充当模拟器使用。</p>
+<p>先看看代码结构</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">zhiyi-client        // 客户端</span><br><span class="line">zhiyi-protocol      // 编码器</span><br><span class="line">zhiyi-server        // 服务端</span><br></pre></td></tr></table></figure>
 
+<h1 id="通信流程"><a href="#通信流程" class="headerlink" title="通信流程"></a>通信流程</h1><p>一般都是服务器是TCP的服务端， 硬件是客户端，硬件通电以后就连接服务器，不过反过来的情况也有，比如硬件都是固定IP的，一般是你要集成别人的硬件的时候遇到。我们这里是用软件模拟硬件， 也就说，两种模式都要写。</p>
+<h1 id="认证数据包"><a href="#认证数据包" class="headerlink" title="认证数据包"></a>认证数据包</h1><h1 id="心跳数据包"><a href="#心跳数据包" class="headerlink" title="心跳数据包"></a>心跳数据包</h1><h1 id="指令下发包"><a href="#指令下发包" class="headerlink" title="指令下发包"></a>指令下发包</h1><h1 id="服务端"><a href="#服务端" class="headerlink" title="服务端"></a>服务端</h1><h1 id="客户端"><a href="#客户端" class="headerlink" title="客户端"></a>客户端</h1>
     </div>
 
     
@@ -367,7 +427,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#小试牛刀"><span class="nav-number">1.</span> <span class="nav-text">小试牛刀</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#为什么要用自定义协议？"><span class="nav-number">1.</span> <span class="nav-text">为什么要用自定义协议？</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#源代地址"><span class="nav-number">2.</span> <span class="nav-text">源代地址</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#数据包结构"><span class="nav-number">3.</span> <span class="nav-text">数据包结构</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#通信流程"><span class="nav-number">4.</span> <span class="nav-text">通信流程</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#认证数据包"><span class="nav-number">5.</span> <span class="nav-text">认证数据包</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#心跳数据包"><span class="nav-number">6.</span> <span class="nav-text">心跳数据包</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#指令下发包"><span class="nav-number">7.</span> <span class="nav-text">指令下发包</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#服务端"><span class="nav-number">8.</span> <span class="nav-text">服务端</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#客户端"><span class="nav-number">9.</span> <span class="nav-text">客户端</span></a></li></ol></div>
         
       </div>
       <!--/noindex-->
@@ -378,7 +438,7 @@
       src="/images/qrcode.jpg"
       alt="知一">
   <p class="site-author-name" itemprop="name">知一</p>
-  <div class="site-description" itemprop="description">水火有气而无生 草木有生而无知 <br/></div>
+  <div class="site-description" itemprop="description">水火有气而无生 草木有生而无知</div>
 </div>
   <nav class="site-state motion-element">
       <div class="site-state-item site-state-posts">
