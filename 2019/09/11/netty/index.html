@@ -29,7 +29,7 @@
     version: '7.4.0',
     exturl: false,
     sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
-    copycode: {"enable":false,"show_result":false,"style":null},
+    copycode: {"enable":true,"show_result":"default","style":null},
     back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
     bookmark: {"enable":false,"color":"#222","save":"auto"},
     fancybox: false,
@@ -62,7 +62,7 @@
 <meta property="og:site_name" content="知一码源">
 <meta property="og:description" content="为什么要用自定义协议？工作中，经常遇到使用企业内自定义的数据包格式, 而 netty 也提供了相关解码器， 尤其是物联网项目中，经常会遇到使用长连接与硬件24小时保持连接, 对于长连接其实可以直接用MQTT这种协议。为什么有些企业不使用这种通用的协议，而是要自定义协议呢？我觉得可能是开发简单（偷懒），如果硬件需要上网，就需要一个通信模块， 我知道的有SIM800C模块， 这种通信模块有一种透传模式">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-10-22T15:49:17.151Z">
+<meta property="og:updated_time" content="2019-10-22T17:26:25.273Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Netty 通用自定义协议框架 【更新中】">
 <meta name="twitter:description" content="为什么要用自定义协议？工作中，经常遇到使用企业内自定义的数据包格式, 而 netty 也提供了相关解码器， 尤其是物联网项目中，经常会遇到使用长连接与硬件24小时保持连接, 对于长连接其实可以直接用MQTT这种协议。为什么有些企业不使用这种通用的协议，而是要自定义协议呢？我觉得可能是开发简单（偷懒），如果硬件需要上网，就需要一个通信模块， 我知道的有SIM800C模块， 这种通信模块有一种透传模式">
@@ -244,7 +244,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2019-10-22 23:49:17" itemprop="dateModified" datetime="2019-10-22T23:49:17+08:00">2019-10-22</time>
+                <time title="修改时间：2019-10-23 01:26:25" itemprop="dateModified" datetime="2019-10-23T01:26:25+08:00">2019-10-23</time>
               </span>
             
           
@@ -270,9 +270,9 @@
       
         <h1 id="为什么要用自定义协议？"><a href="#为什么要用自定义协议？" class="headerlink" title="为什么要用自定义协议？"></a>为什么要用自定义协议？</h1><p>工作中，经常遇到使用企业内自定义的数据包格式, 而 netty 也提供了相关解码器， 尤其是物联网项目中，经常会遇到使用长连接与硬件24小时保持连接, 对于长连接其实可以直接用MQTT这种协议。为什么有些企业不使用这种通用的协议，而是要自定义协议呢？我觉得可能是开发简单（偷懒），如果硬件需要上网，就需要一个通信模块， 我知道的有SIM800C模块， 这种通信模块有一种透传模式，硬件从串口的数据，都会被发送给事先设定好的ip:port, 并且硬件绝大多数开发都是采用的C语言，而C语言的中的结构体有一个特点，就是占用的内存等于结构体中的每一个变量所占内存的和，也就说，硬件如果直接把一个结构体直接发出来，那么服务端拿到的就是这个结构体二进制数组，硬件只要告诉你他的结构体，你就能 “拆” 出变量。</p>
 <p>这个框架不涉及到业务，重在理解。</p>
-<h1 id="源代地址"><a href="#源代地址" class="headerlink" title="源代地址"></a>源代地址</h1><a id="more"></a>
+<a id="more"></a>
 
-<h1 id="数据包结构"><a href="#数据包结构" class="headerlink" title="数据包结构"></a>数据包结构</h1><table>
+<h1 id="源代地址"><a href="#源代地址" class="headerlink" title="源代地址"></a>源代地址</h1><h1 id="数据包结构"><a href="#数据包结构" class="headerlink" title="数据包结构"></a>数据包结构</h1><table>
 <thead>
 <tr>
 <th>Tag</th>
@@ -379,6 +379,22 @@
 
         
 
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+              
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+              
+                <a href="/2019/10/23/threejs_01/" rel="prev" title="threejs 导入FBX大模型解决思路">
+                  threejs 导入FBX大模型解决思路 <i class="fa fa-chevron-right"></i>
+                </a>
+              
+            </div>
+          </div>
+        
       </footer>
     
   </div>
@@ -444,7 +460,7 @@
         
           <a href="/archives/">
         
-          <span class="site-state-item-count">1</span>
+          <span class="site-state-item-count">2</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
