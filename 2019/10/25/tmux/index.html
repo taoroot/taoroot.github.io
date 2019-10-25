@@ -57,18 +57,20 @@
   };
 </script>
 
-  <meta name="description" content="水火有气而无生 草木有生而无知">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Tags">
-<meta property="og:url" content="https://zhiyi.im/tags/index.html">
+  <meta name="description" content="怎么让java程序一直再服务器上跑了,不让程序随着窗口关闭而停止">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Tmux 终端复用软件">
+<meta property="og:url" content="https://zhiyi.im/2019/10/25/tmux/index.html">
 <meta property="og:site_name" content="知一码源">
-<meta property="og:description" content="水火有气而无生 草木有生而无知">
+<meta property="og:description" content="怎么让java程序一直再服务器上跑了,不让程序随着窗口关闭而停止">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-09-11T15:47:33.722Z">
+<meta property="og:image" content="https://zhiyi.im/pub/img/tmux.jpg">
+<meta property="og:updated_time" content="2019-10-25T07:22:37.394Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Tags">
-<meta name="twitter:description" content="水火有气而无生 草木有生而无知">
-  <link rel="canonical" href="https://zhiyi.im/tags/">
+<meta name="twitter:title" content="Tmux 终端复用软件">
+<meta name="twitter:description" content="怎么让java程序一直再服务器上跑了,不让程序随着窗口关闭而停止">
+<meta name="twitter:image" content="https://zhiyi.im/pub/img/tmux.jpg">
+  <link rel="canonical" href="https://zhiyi.im/2019/10/25/tmux/">
 
 
 <script id="page-configurations">
@@ -76,13 +78,13 @@
   CONFIG.page = {
     sidebar: "",
     isHome: false,
-    isPost: false,
-    isPage: true,
+    isPost: true,
+    isPage: false,
     isArchive: false
   };
 </script>
 
-  <title>Tags | 知一码源</title>
+  <title>Tmux 终端复用软件 | 知一码源</title>
   <meta name="generator" content="Hexo 3.9.0">
   
 
@@ -184,18 +186,6 @@
 
     
 
-    
-    
-      
-      
-    
-      
-      
-    
-    
-
-  
-
 </nav>
 </div>
     </header>
@@ -214,51 +204,134 @@
             
 
   <div id="posts" class="posts-expand">
-    
-    
-    
-    <div class="post-block page">
-      <header class="post-header">
-
-<h1 class="post-title" itemprop="name headline">Tags
-
-</h1>
-
-<div class="post-meta">
+      <article itemscope itemtype="http://schema.org/Article">
   
+  
+  
+  <div class="post-block post">
+    <link itemprop="mainEntityOfPage" href="https://zhiyi.im/2019/10/25/tmux/">
 
-</div>
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="知一">
+      <meta itemprop="description" content="水火有气而无生 草木有生而无知">
+      <meta itemprop="image" content="/images/qrcode.jpg">
+    </span>
 
-</header>
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="知一码源">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">Tmux 终端复用软件
 
-      
-      
-      
-      <div class="post-body">
-        
-          <div class="tag-cloud">
-            <div class="tag-cloud-title">
-              
-              
-              暂无标签
-            </div>
-            <div class="tag-cloud-tags">
+          
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
               
                 
+              
+
+              <time title="创建时间：2019-10-25 15:01:31 / 修改时间：15:22:37" itemprop="dateCreated datePublished" datetime="2019-10-25T15:01:31+08:00">2019-10-25</time>
+            </span>
+          
+            
+
+            
+          
+
+          
+            <span class="post-meta-item" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>怎么让java程序一直再服务器上跑了,不让程序随着窗口关闭而停止</p>
+<p><img src="/pub/img/tmux.jpg" alt="tmux"></p>
+<a id="more"></a>
+
+<p>把程序放再tmux 上跑， 防止意外关闭终端，进程终止。</p>
+<h1 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 新建会话xxx</span></span><br><span class="line">tmux new -s xxx </span><br><span class="line"><span class="comment"># 或者是 ctrl + b 手松再按 b</span></span><br><span class="line">tmux detach</span><br><span class="line"><span class="comment"># 回到会话 -d 把别人挤掉</span></span><br><span class="line">tmux a -t xxx  </span><br><span class="line"><span class="comment"># 关闭会话</span></span><br><span class="line">tmux <span class="built_in">kill</span>-session -t xxx</span><br><span class="line"><span class="comment"># 关闭所有</span></span><br><span class="line">tmux <span class="built_in">kill</span>-server</span><br><span class="line"><span class="comment"># 查看所有会话 切换会话 ctrl + b 手松再按 s</span></span><br><span class="line">tmux ls</span><br></pre></td></tr></table></figure>
+
+<p>新建 Ctrl+b 手松再按 c<br>上一页 Ctrl+b 手松再按 p<br>下一页 Ctrl+b 手松再按 n</p>
+
+    </div>
+
+    
+    
+    
+        
+      
+        <div id="reward-container">
+  <div></div>
+  <button id="reward-button" disable="enable" onclick="var qr = document.getElementById(&quot;qr&quot;); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+        
+      
+      <div style="display: inline-block">
+        <img src="/images/wechatpay.png" alt="知一 微信支付">
+        <p>微信支付</p>
+      </div>
+        
+      
+      <div style="display: inline-block">
+        <img src="/images/alipay.png" alt="知一 支付宝">
+        <p>支付宝</p>
+      </div>
+
+  </div>
+</div>
+
+      
+
+      <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+              
+                <a href="/2019/10/25/threejs/" rel="next" title="Threejs 特效">
+                  <i class="fa fa-chevron-left"></i> Threejs 特效
+                </a>
+              
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
               
             </div>
           </div>
         
-      </div>
-      
-      
-      
-    </div>
+      </footer>
     
+  </div>
+  
+  
+  
+  </article>
 
-    
-    
-    
   </div>
 
 
@@ -298,6 +371,8 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#使用"><span class="nav-number">1.</span> <span class="nav-text">使用</span></a></li></ol></div>
+        
       </div>
       <!--/noindex-->
 
@@ -461,7 +536,7 @@
       repo: 'gitalk',
       owner: 'taoroot',
       admin: ['taoroot'],
-      id: 'f47af1d1eda4d807b02bba32be15120b',
+      id: '81ca3f420c5aa9a0755bcce20ada77e9',
         language: 'zh-CN',
       
       distractionFreeMode: 'true'

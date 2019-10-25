@@ -2,6 +2,20 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://zhiyi.im/2019/10/25/tmux/</loc>
+    
+    <lastmod>2019-10-25T07:22:37.394Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://zhiyi.im/2019/09/11/netty_iot/</loc>
+    
+    <lastmod>2019-10-25T06:58:12.144Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://zhiyi.im/html/threejs.html</loc>
     
     <lastmod>2019-10-25T06:43:46.841Z</lastmod>
@@ -12,13 +26,6 @@
     <loc>https://zhiyi.im/2019/10/25/threejs/</loc>
     
     <lastmod>2019-10-25T06:29:04.294Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://zhiyi.im/2019/09/11/netty_iot/</loc>
-    
-    <lastmod>2019-10-25T05:49:23.395Z</lastmod>
     
   </url>
   
