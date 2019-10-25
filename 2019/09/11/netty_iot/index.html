@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+
+
+
+
+
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.4.0">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.4.0">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.4.0">
+  <link rel="mask-icon" href="/images/logo.svg?v=7.4.0" color="#222">
+
+<link rel="stylesheet" href="/css/main.css?v=7.4.0">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2">
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '7.4.0',
+    exturl: false,
+    sidebar: {"position":"right","display":"post","offset":12,"onmobile":false},
+    copycode: {"enable":true,"show_result":"default","style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: '',
+    motion: {"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    translation: {
+      copy_button: '复制',
+      copy_success: '复制成功',
+      copy_failure: '复制失败'
+    },
+    sidebarPadding: 40
+  };
+</script>
+
+  <meta name="description" content="工作中，经常遇到使用企业内自定义的数据包格式, 而 netty 也提供了相关解码器， 尤其是物联网项目中，经常会遇到使用长连接与硬件24小时保持连接, 对于长连接其实可以直接用MQTT这种协议。为什么有些企业不使用这种通用的协议，而是要自定义协议呢？我觉得可能是开发简单（偷懒），如果硬件需要上网，就需要一个通信模块， 我知道的有SIM800C模块， 这种通信模块有一种透传模式，硬件从串口的数据，都">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Netty 通用自定义协议框架">
+<meta property="og:url" content="https://zhiyi.im/2019/09/11/netty_iot/index.html">
+<meta property="og:site_name" content="知一码源">
+<meta property="og:description" content="工作中，经常遇到使用企业内自定义的数据包格式, 而 netty 也提供了相关解码器， 尤其是物联网项目中，经常会遇到使用长连接与硬件24小时保持连接, 对于长连接其实可以直接用MQTT这种协议。为什么有些企业不使用这种通用的协议，而是要自定义协议呢？我觉得可能是开发简单（偷懒），如果硬件需要上网，就需要一个通信模块， 我知道的有SIM800C模块， 这种通信模块有一种透传模式，硬件从串口的数据，都">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-10-25T03:09:47.208Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Netty 通用自定义协议框架">
+<meta name="twitter:description" content="工作中，经常遇到使用企业内自定义的数据包格式, 而 netty 也提供了相关解码器， 尤其是物联网项目中，经常会遇到使用长连接与硬件24小时保持连接, 对于长连接其实可以直接用MQTT这种协议。为什么有些企业不使用这种通用的协议，而是要自定义协议呢？我觉得可能是开发简单（偷懒），如果硬件需要上网，就需要一个通信模块， 我知道的有SIM800C模块， 这种通信模块有一种透传模式，硬件从串口的数据，都">
+  <link rel="canonical" href="https://zhiyi.im/2019/09/11/netty_iot/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>Netty 通用自定义协议框架 | 知一码源</title>
+  <meta name="generator" content="Hexo 3.9.0">
+  
+
+
+  <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?b38d32b39d2af114b05e6b9633c504d3";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+  <div class="container">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">知一码源</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+      
+      
+      
+        
+        <li class="menu-item menu-item-home">
+      
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-archives">
+      
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+  </ul>
+
+    
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+      <article itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block post">
+    <link itemprop="mainEntityOfPage" href="https://zhiyi.im/2019/09/11/netty_iot/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="知一">
+      <meta itemprop="description" content="水火有气而无生 草木有生而无知">
+      <meta itemprop="image" content="/images/qrcode.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="知一码源">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">Netty 通用自定义协议框架
+
+          
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              
+                
+              
+
+              <time title="创建时间：2019-09-11 20:25:42" itemprop="dateCreated datePublished" datetime="2019-09-11T20:25:42+08:00">2019-09-11</time>
+            </span>
+          
+            
+
+            
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2019-10-25 11:09:47" itemprop="dateModified" datetime="2019-10-25T11:09:47+08:00">2019-10-25</time>
+              </span>
+            
+          
+
+          
+            <span class="post-meta-item" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>工作中，经常遇到使用企业内自定义的数据包格式, 而 netty 也提供了相关解码器， 尤其是物联网项目中，经常会遇到使用长连接与硬件24小时保持连接, 对于长连接其实可以直接用MQTT这种协议。为什么有些企业不使用这种通用的协议，而是要自定义协议呢？我觉得可能是开发简单（偷懒），如果硬件需要上网，就需要一个通信模块， 我知道的有SIM800C模块， 这种通信模块有一种透传模式，硬件从串口的数据，都会被发送给事先设定好的ip:port, 并且硬件绝大多数开发都是采用的C语言，而C语言的中的结构体有一个特点，就是占用的内存等于结构体中的每一个变量所占内存的和，也就说，硬件如果直接把一个结构体直接发出来，那么服务端拿到的就是这个结构体二进制数组，硬件只要告诉你他的结构体，你就能 “拆” 出变量。</p>
+<a id="more"></a>
+
+<h1 id="源代地址"><a href="#源代地址" class="headerlink" title="源代地址"></a>源代地址</h1><h1 id="数据包结构"><a href="#数据包结构" class="headerlink" title="数据包结构"></a>数据包结构</h1><table>
+<thead>
+<tr>
+<th>Tag</th>
+<th>Version</th>
+<th>Type</th>
+<th>Length</th>
+<th>Content</th>
+<th>CRC32</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0xAA</td>
+<td>0x01</td>
+<td>0x10</td>
+<td>0x000D</td>
+<td>“HELLO,WORLD”</td>
+<td>0xAB1F</td>
+</tr>
+</tbody></table>
+<table>
+<thead>
+<tr>
+<th>名称</th>
+<th>偏移位置</th>
+<th>长度</th>
+<th>值范围</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>包头</td>
+<td>0</td>
+<td>1</td>
+<td>固定 0xAA</td>
+</tr>
+<tr>
+<td>版本</td>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+</tr>
+<tr>
+<td>类型</td>
+<td>2</td>
+<td>1</td>
+<td>0-127</td>
+</tr>
+<tr>
+<td>数据长度</td>
+<td>3</td>
+<td>4</td>
+<td>数据字节数</td>
+</tr>
+<tr>
+<td>数据</td>
+<td>7</td>
+<td>n</td>
+<td>协议类型决定</td>
+</tr>
+<tr>
+<td>校验码</td>
+<td>n+7</td>
+<td>2</td>
+<td>类型、数据长度、数据 三部分的所有字节的CRC-16码</td>
+</tr>
+</tbody></table>
+<p>其实对于特定数据包，往往只要完成一个解码或者是完成编码就行。如果是硬件发送给你的数据包，那么你只要完成解码就行，如果是发送给硬件的，那么你只要完成编码就行。不过我一般都会完成编解码，主要是方便测试，充当模拟器使用。</p>
+<p>先看看代码结构</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">zhiyi-client        // 客户端</span><br><span class="line">zhiyi-protocol      // 编码器</span><br><span class="line">zhiyi-server        // 服务端</span><br></pre></td></tr></table></figure>
+
+<h1 id="通信流程"><a href="#通信流程" class="headerlink" title="通信流程"></a>通信流程</h1><p>一般都是服务器是TCP的服务端， 硬件是客户端，硬件通电以后就连接服务器，不过反过来的情况也有，比如硬件都是固定IP的，一般是你要集成别人的硬件的时候遇到。我们这里是用软件模拟硬件， 也就说，两种模式都要写。</p>
+<h1 id="认证数据包"><a href="#认证数据包" class="headerlink" title="认证数据包"></a>认证数据包</h1><h2 id="重连机制"><a href="#重连机制" class="headerlink" title="重连机制"></a>重连机制</h2><p>这部分针对的是client，在断开后，进行重来机制。思路就是先定时器，定时遍历所有设备的连接状态。这里为什么不采用在断开连接时候，直接去重连呢，主要是，有两种情况下，需要重连，一种是首次连接失败重连【INIT】状态，一种是断开连接后重连【RECONNECT】状态。而且，在断开连接以后，得延迟一段日志重新连接，不然会一直在不停的重连。所以，我采用了定时器遍历，只要状态不是【CONNECTED】，就进行重连，只需要在上述两种情况中设置对于的状态位就行。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 定时器内容</span></span><br><span class="line"><span class="keyword">for</span> (AuthPackage tag : properties.getTags()) &#123;</span><br><span class="line">    <span class="keyword">if</span> (tag.getState() != AuthPackage.CONNECTED) &#123;</span><br><span class="line"></span><br><span class="line">        ChannelFuture channelFuture = bootstrap.connect(properties.getAddress(), properties.getPort());</span><br><span class="line"></span><br><span class="line">        channelFuture.channel().attr(AttrUtil.AUTH_PACKAGE_ATTRIBUTE_KEY).setIfAbsent(tag);</span><br><span class="line"></span><br><span class="line">        channelFuture.addListener((ChannelFutureListener) future -&gt; &#123;</span><br><span class="line">                    AuthPackage _tag = channelFuture.channel().attr(AttrUtil.AUTH_PACKAGE_ATTRIBUTE_KEY).get();</span><br><span class="line">                    <span class="keyword">if</span> (future.isSuccess()) &#123;</span><br><span class="line">                        future.channel().attr(AttrUtil.TAG_ID).setIfAbsent(_tag.getId());</span><br><span class="line">                        <span class="comment">// 上报认证</span></span><br><span class="line">                        future.channel().writeAndFlush(<span class="keyword">new</span> NettyMessage(_tag));</span><br><span class="line">                        _tag.setState(AuthPackage.CONNECTED);</span><br><span class="line">                        log.info(<span class="string">"&#123;&#125; connect success"</span>, _tag.getId());</span><br><span class="line">                    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                        _tag.setState(AuthPackage.INIT);</span><br><span class="line">                        log.error(<span class="string">"&#123;&#125; connect failure"</span>, _tag.getId());</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">        );</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// TCP断开处理</span></span><br><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">channelInactive</span><span class="params">(ChannelHandlerContext ctx)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">    AuthPackage authPackage = ctx.channel().attr(AttrUtil.AUTH_PACKAGE_ATTRIBUTE_KEY).get();</span><br><span class="line">    authPackage.setState(AuthPackage.RECONNECT);</span><br><span class="line">    log.error(<span class="string">"&#123;&#125; connect close"</span>, authPackage.getId());</span><br><span class="line">    <span class="keyword">super</span>.channelInactive(ctx);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="心跳数据包"><a href="#心跳数据包" class="headerlink" title="心跳数据包"></a>心跳数据包</h1><p>为什么要有心跳包， 主要是如果依靠TCP底层的断开连接包的话，是在正常断开连接下，其实tcp自己就有心跳包，但是这个不一定好用哟， 所谓的tcp长连接，其实也就是定时发送心跳包，检查链路是否正常，当时很多智能硬件，上网都是靠数传模块，也就是说，其实智能硬件看到的不是tcp，而是串口数据，串口并没有tcp那种特性，知道发出去的有没有人被接受，差不多就是UDP了，所以硬件会启动一个看门狗程序，和一个定时器，定时器会定时发送上报心跳包，如果服务器收到后，就会下发回应心跳包，看门狗就会重新初始化，反之，如果没有收到，看门狗会重启数传模块，达到重连效果。服务器也需要去判断，从而确定硬件是否正常，因为数传模块和智能硬件可是独立的，有可能数传是正常的，但是硬件已经挂掉了，从而就不会发送心跳包，这种情况，也需要服务器主动断开连接，更加严谨一点，可以让服务器主动下发心跳包，让硬件回应。达到双工效果。<br>Netty 有一个TCP读写空闲事件，如果硬件长时间未上报数据，超过预先设置的空闲时间，那么就得断开连接了。</p>
+<h2 id="服务端"><a href="#服务端" class="headerlink" title="服务端"></a>服务端</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">userEventTriggered</span><span class="params">(ChannelHandlerContext ctx, Object evt)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (evt <span class="keyword">instanceof</span> IdleStateEvent) &#123;</span><br><span class="line">        IdleStateEvent idleStateEvent = (IdleStateEvent) evt;</span><br><span class="line">        <span class="comment">// 空闲断开</span></span><br><span class="line">        <span class="keyword">if</span> (idleStateEvent.state() == IdleState.READER_IDLE) &#123;</span><br><span class="line">            channelInactive(ctx);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">super</span>.userEventTriggered(ctx, evt);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>启动空闲检测需要在启动项中加入空闲handler</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 读空闲，写空闲，全空闲，单位</span></span><br><span class="line">pipeline.addLast(<span class="keyword">new</span> IdleStateHandler(<span class="number">10000</span>, clientProperties.getRate(), <span class="number">200000</span>, TimeUnit.MILLISECONDS));</span><br></pre></td></tr></table></figure>
+
+<h2 id="客户端"><a href="#客户端" class="headerlink" title="客户端"></a>客户端</h2><p>空闲hangdler，因为是客户端主动上报，服务器响应，客户端得保证发送心跳包的时间要小于服务端配置的读空闲时间。<br>为什么这里不使用定时器，定时发送心跳包呢， 因为没必要呀，这个心跳包是为了让tcp不要一直处于空闲状态，如果tcp链路中，已经有数据在传输了，就没必要发送心跳包了，所以通过监听客户端的TCP 【写空闲】就好了，只要客户端一直有数据上报就好，就不会触发服务器的读空闲事件。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 读空闲，写空闲，全空闲，单位</span></span><br><span class="line">pipeline.addLast(<span class="keyword">new</span> IdleStateHandler(<span class="number">10000</span>, clientProperties.getRate(), <span class="number">200000</span>, TimeUnit.MILLISECONDS));</span><br></pre></td></tr></table></figure>
+
+<p>通道空闲的时候就发心跳</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">userEventTriggered</span><span class="params">(ChannelHandlerContext ctx, Object evt)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (evt <span class="keyword">instanceof</span> IdleStateEvent) &#123;</span><br><span class="line">        IdleStateEvent idleStateEvent = (IdleStateEvent) evt;</span><br><span class="line">        <span class="keyword">switch</span> (idleStateEvent.state() == IdleState.WRITER_IDLE) &#123;</span><br><span class="line">             protocolProcess.heartHandler().process(ctx.channel());</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">super</span>.userEventTriggered(ctx, evt);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="指令下发包"><a href="#指令下发包" class="headerlink" title="指令下发包"></a>指令下发包</h1><h1 id="服务端-1"><a href="#服务端-1" class="headerlink" title="服务端"></a>服务端</h1><h1 id="客户端-1"><a href="#客户端-1" class="headerlink" title="客户端"></a>客户端</h1>
+    </div>
+
+    
+    
+    
+        
+      
+        <div id="reward-container">
+  <div></div>
+  <button id="reward-button" disable="enable" onclick="var qr = document.getElementById(&quot;qr&quot;); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+        
+      
+      <div style="display: inline-block">
+        <img src="/images/wechatpay.png" alt="知一 微信支付">
+        <p>微信支付</p>
+      </div>
+        
+      
+      <div style="display: inline-block">
+        <img src="/images/alipay.png" alt="知一 支付宝">
+        <p>支付宝</p>
+      </div>
+
+  </div>
+</div>
+
+      
+
+      <footer class="post-footer">
+
+        
+
+      </footer>
+    
+  </div>
+  
+  
+  
+  </article>
+
+  </div>
+
+
+          </div>
+          
+    
+    <div class="comments" id="gitalk-container"></div>
+  
+
+        </div>
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+        
+        
+        
+        
+      
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#源代地址"><span class="nav-number">1.</span> <span class="nav-text">源代地址</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#数据包结构"><span class="nav-number">2.</span> <span class="nav-text">数据包结构</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#通信流程"><span class="nav-number">3.</span> <span class="nav-text">通信流程</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#认证数据包"><span class="nav-number">4.</span> <span class="nav-text">认证数据包</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#重连机制"><span class="nav-number">4.1.</span> <span class="nav-text">重连机制</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#心跳数据包"><span class="nav-number">5.</span> <span class="nav-text">心跳数据包</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#服务端"><span class="nav-number">5.1.</span> <span class="nav-text">服务端</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#客户端"><span class="nav-number">5.2.</span> <span class="nav-text">客户端</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#指令下发包"><span class="nav-number">6.</span> <span class="nav-text">指令下发包</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#服务端-1"><span class="nav-number">7.</span> <span class="nav-text">服务端</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#客户端-1"><span class="nav-number">8.</span> <span class="nav-text">客户端</span></a></li></ol></div>
+        
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image"
+      src="/images/qrcode.jpg"
+      alt="知一">
+  <p class="site-author-name" itemprop="name">知一</p>
+  <div class="site-description" itemprop="description">水火有气而无生 草木有生而无知</div>
+</div>
+  <nav class="site-state motion-element">
+      <div class="site-state-item site-state-posts">
+        
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">1</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+    
+  </nav>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+      
+      
+        
+      
+      
+        
+      
+        <a href="https://github.com/taoroot" title="GitHub &rarr; https://github.com/taoroot" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+    
+      <span class="links-of-author-item">
+      
+      
+        
+      
+      
+        
+      
+        <a href="mailto:lujiantaoxyz@outlook.com" title="E-Mail &rarr; mailto:lujiantaoxyz@outlook.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+      </span>
+    
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2018 – <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">知一</span>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-user"></i>
+    </span>
+    <span class="site-uv" title="总访客量">
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+    </span>
+  
+    <span class="post-meta-divider">|</span>
+  
+    <span class="post-meta-item-icon">
+      <i class="fa fa-eye"></i>
+    </span>
+    <span class="site-pv" title="总访问量">
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+
+
+  <script src="/lib/anime.min.js?v=3.1.0"></script>
+<script src="/js/utils.js?v=7.4.0"></script>
+<script src="/js/schemes/muse.js?v=7.4.0"></script>
+
+<script src="/js/next-boot.js?v=7.4.0"></script>
+
+
+
+  
+  <script>
+    (function(){
+      var bp = document.createElement('script');
+      var curProtocol = window.location.protocol.split(':')[0];
+      bp.src = (curProtocol === 'https') ? 'https://zz.bdstatic.com/linksubmit/push.js' : 'http://push.zhanzhang.baidu.com/push.js';
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(bp, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.css">
+
+<script>
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js', () => {
+    var gitalk = new Gitalk({
+      clientID: '67a09a8973729dc0ba56',
+      clientSecret: 'd50fff7ff5ba2c8a01e82834414a64b78816ce61',
+      repo: 'gitalk',
+      owner: 'taoroot',
+      admin: ['taoroot'],
+      id: '70828b17715686b15c7059da00c314e1',
+        language: 'zh-CN',
+      
+      distractionFreeMode: 'true'
+    });
+    gitalk.render('gitalk-container');
+  }, window.Gitalk);
+</script>
+
+</body>
+</html>
