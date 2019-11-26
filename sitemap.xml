@@ -2,9 +2,16 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://zhiyi.im/2019/10/25/threejs/</loc>
+    
+    <lastmod>2019-11-26T03:07:19.734Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://zhiyi.im/2019/11/22/mybatis/</loc>
     
-    <lastmod>2019-11-22T08:46:59.655Z</lastmod>
+    <lastmod>2019-11-25T05:06:02.292Z</lastmod>
     
   </url>
   
@@ -33,13 +40,6 @@
     <loc>https://zhiyi.im/html/threejs.html</loc>
     
     <lastmod>2019-10-25T06:43:46.841Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://zhiyi.im/2019/10/25/threejs/</loc>
-    
-    <lastmod>2019-10-25T06:29:04.294Z</lastmod>
     
   </url>
   
