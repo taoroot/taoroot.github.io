@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>https://zhiyi.im/2019/09/11/netty_iot/</loc>
+    <lastmod>2019-12-02</lastmod>
+  </url>  <url>
     <loc>https://zhiyi.im/2019/11/30/jvm/</loc>
     <lastmod>2019-12-01</lastmod>
   </url>  <url>
@@ -15,8 +18,5 @@
   </url>  <url>
     <loc>https://zhiyi.im/2019/10/25/linux/</loc>
     <lastmod>2019-10-28</lastmod>
-  </url>  <url>
-    <loc>https://zhiyi.im/2019/09/11/netty_iot/</loc>
-    <lastmod>2019-10-26</lastmod>
   </url>
 </urlset>
