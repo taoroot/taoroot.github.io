@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://zhiyi.im/2019/10/23/spring_security/</loc>
+    
+    <lastmod>2019-12-02T12:33:38.236Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://zhiyi.im/2019/09/11/netty_iot/</loc>
     
     <lastmod>2019-12-02T06:12:56.514Z</lastmod>
