@@ -65,7 +65,7 @@
 <meta property="og:site_name" content="知一码源">
 <meta property="og:description" content="权限管理，一般指根据系统设置的安全规则或者安全策略，用户可以访问而且只能访问自己被授权的资源，不多不少。权限管理几乎出现在任何系统里面，只要有用户和密码的系统。">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-12-02T12:36:37.377Z">
+<meta property="og:updated_time" content="2019-12-03T05:20:33.248Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="权限设计与实现">
 <meta name="twitter:description" content="权限管理，一般指根据系统设置的安全规则或者安全策略，用户可以访问而且只能访问自己被授权的资源，不多不少。权限管理几乎出现在任何系统里面，只要有用户和密码的系统。">
@@ -258,7 +258,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2019-12-02 20:36:37" itemprop="dateModified" datetime="2019-12-02T20:36:37+08:00">2019-12-02</time>
+                <time title="修改时间：2019-12-03 13:20:33" itemprop="dateModified" datetime="2019-12-03T13:20:33+08:00">2019-12-03</time>
               </span>
             
           
@@ -295,7 +295,8 @@
 <p>动态创建角色，就是动态调整权限。一个角色就是对一串权限的集合。无法就是对这个集合中的元素进行动态的添加和修改。这个和上文中的用if就不行了，因为开放APP的人并不能提前知道有哪些角色，也就不能用角色类型去判断了。这个if是没有了，但是服务器的那个if还在，所以其实很简单，只需要让服务器把那个if的实现发给APP开发者就行，让APP开发者也跟着做一遍就好。那问题又来了，这样子有什么意义没。我后端服务都实现了，你前端在走一次。我只能说，是为了方便用户，或者是更加友善。如果前端不走一次，那就意味着，用户在不点击按钮的时候，是不知道自己有没有这个功能的。</p>
 <h2 id="部门"><a href="#部门" class="headerlink" title="部门"></a>部门</h2><p>角色只是解决了不同用户具有不同的权限，能看到不同的界面，调用不同的接口。拿老师来将，同样是班主任这个角色。我是不是应该只能看到自己班级的学生信息，而不是全校的学生信息。这个角色并没有帮我们解决。如果我们把角色赋予部门的概念。把某班的班主任和那几十个学生都放在这个部门下，所有赋予的角色，只能在当前部门下有效。灵活创建部门又是一个难点，看实践篇再说。</p>
 <h2 id="租户"><a href="#租户" class="headerlink" title="租户"></a>租户</h2><p>如果这个APP需要服务于不同的学校，然后学生都是使用学号登录的。是不是就遇到了不同学校，学号相同的情况。最暴力的方式，一个学校一套服务，但为了维护性，以及省钱，这个时候，就需要在登录的时候，让用户选择不同的学校。另一种方式就是不同的学校，有不同的APP，我通过把学校的ID写死在APP里面，这种方式有什么好处呢，我可以定制化APP了，但是在网页上就比较常见，会通过不同的域名，来作为登录界面，通过域名来判断不同的租户。xxx.qq.com xxx1.qq.com 这就是两个或者是qq.com/xxx  qq.com/xxx1。登录下自己的qq空间就知道了。</p>
-<h1 id="实践篇"><a href="#实践篇" class="headerlink" title="实践篇"></a>实践篇</h1>
+<h1 id="实践篇"><a href="#实践篇" class="headerlink" title="实践篇"></a>实践篇</h1><p>这里我将使用两种方式，</p>
+
     </div>
 
     
@@ -416,7 +417,7 @@
         
           <a href="/archives/">
         
-          <span class="site-state-item-count">7</span>
+          <span class="site-state-item-count">8</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>

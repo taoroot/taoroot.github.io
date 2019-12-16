@@ -70,7 +70,7 @@
 <meta property="og:image" content="https://zhiyi.im/pub/img/jvm_2.png">
 <meta property="og:image" content="https://zhiyi.im/pub/img/jvm_4.png">
 <meta property="og:image" content="https://zhiyi.im/pub/img/jvm_5.png">
-<meta property="og:updated_time" content="2019-12-01T08:08:28.470Z">
+<meta property="og:updated_time" content="2019-12-04T08:12:44.099Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="JVM 解读">
 <meta name="twitter:description" content="JVM是Java Virtual Machine（Java虚拟机）的缩写，JVM是一种用于计算设备的规范，它是一个虚构出来的计算机，是通过在实际的计算机上仿真模拟各种计算机功能来实现的。引入Java语言虚拟机后，Java语言在不同平台上运行时不需要重新编译。Java语言使用Java虚拟机屏蔽了与具体平台相关的信息，使得Java语言编译程序只需生成在Java虚拟机上运行的目标代码（字节码），就可以在">
@@ -264,7 +264,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2019-12-01 16:08:28" itemprop="dateModified" datetime="2019-12-01T16:08:28+08:00">2019-12-01</time>
+                <time title="修改时间：2019-12-04 16:12:44" itemprop="dateModified" datetime="2019-12-04T16:12:44+08:00">2019-12-04</time>
               </span>
             
           
@@ -318,6 +318,9 @@
 
 <p>JVM 是C++编写的，当我们用java启动线程的时候，肯定是通过C++去执行的。也就是thread.start() 会去调用C++的方法，创建一个系统线程，java采用native关键字表示，当前方法是C++的方法。创建了线程就可以执行java了，就是run() 里面的东西。<br>所以Runnable就是需要执行的代码，Thread就是存储了对应JVM创建的系统线程的信息。</p>
 <h2 id="Thread"><a href="#Thread" class="headerlink" title="Thread"></a>Thread</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">synchronized</span> <span class="keyword">void</span> <span class="title">start</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (threadStatus != <span class="number">0</span>)</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> IllegalThreadStateException();</span><br><span class="line"></span><br><span class="line">    group.add(<span class="keyword">this</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">boolean</span> started = <span class="keyword">false</span>;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        start0();</span><br><span class="line">        started = <span class="keyword">true</span>;</span><br><span class="line">    &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="keyword">if</span> (!started) &#123;</span><br><span class="line">                group.threadStartFailed(<span class="keyword">this</span>);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; <span class="keyword">catch</span> (Throwable ignore) &#123;</span><br><span class="line">            </span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">native</span> <span class="keyword">void</span> <span class="title">start0</span><span class="params">()</span></span>;</span><br></pre></td></tr></table></figure>
+
+<h1 id="线程池"><a href="#线程池" class="headerlink" title="线程池"></a>线程池</h1><p>线程池是为了增加性能，保活线程，减少创建和销毁现场所带来的时间损耗。</p>
+
     </div>
 
     
@@ -365,6 +368,10 @@
             <span class="post-nav-divider"></span>
 
             <div class="post-nav-prev post-nav-item">
+              
+                <a href="/2019/12/16/spring_mvc/" rel="prev" title="Spring Framework 解读">
+                  Spring Framework 解读 <i class="fa fa-chevron-right"></i>
+                </a>
               
             </div>
           </div>
@@ -416,7 +423,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#操作系统架构"><span class="nav-number">1.</span> <span class="nav-text">操作系统架构</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#进程-？-线程"><span class="nav-number">1.1.</span> <span class="nav-text">进程 ？ 线程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Linux-进程调度"><span class="nav-number">1.2.</span> <span class="nav-text">Linux 进程调度</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#进程布局"><span class="nav-number">1.3.</span> <span class="nav-text">进程布局</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Java-线程"><span class="nav-number">2.</span> <span class="nav-text">Java 线程</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#java编译执行原理图"><span class="nav-number">2.1.</span> <span class="nav-text">java编译执行原理图</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Thread"><span class="nav-number">2.2.</span> <span class="nav-text">Thread</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#操作系统架构"><span class="nav-number">1.</span> <span class="nav-text">操作系统架构</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#进程-？-线程"><span class="nav-number">1.1.</span> <span class="nav-text">进程 ？ 线程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Linux-进程调度"><span class="nav-number">1.2.</span> <span class="nav-text">Linux 进程调度</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#进程布局"><span class="nav-number">1.3.</span> <span class="nav-text">进程布局</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Java-线程"><span class="nav-number">2.</span> <span class="nav-text">Java 线程</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#java编译执行原理图"><span class="nav-number">2.1.</span> <span class="nav-text">java编译执行原理图</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Thread"><span class="nav-number">2.2.</span> <span class="nav-text">Thread</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#线程池"><span class="nav-number">3.</span> <span class="nav-text">线程池</span></a></li></ol></div>
         
       </div>
       <!--/noindex-->
@@ -434,7 +441,7 @@
         
           <a href="/archives/">
         
-          <span class="site-state-item-count">7</span>
+          <span class="site-state-item-count">8</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
