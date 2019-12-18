@@ -61,15 +61,15 @@
   <meta name="description" content="Spring框架是由于软件开发的复杂性而创建的。Spring使用的是基本的JavaBean来完成以前只可能由EJB完成的事情。然而，Spring的用途不仅仅限于服务器端的开发。从简单性、可测试性和松耦合性角度而言，绝大部分Java应用都可以从Spring中受益。 https://docs.spring.io/spring/docs/5.2.1.RELEASE/spring-framework-re">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Spring Framework 浅析">
-<meta property="og:url" content="https://zhiyi.im/2019/12/16/spring_mvc/index.html">
+<meta property="og:url" content="https://zhiyi.im/2019/12/16/spring_framework/index.html">
 <meta property="og:site_name" content="知一码源">
 <meta property="og:description" content="Spring框架是由于软件开发的复杂性而创建的。Spring使用的是基本的JavaBean来完成以前只可能由EJB完成的事情。然而，Spring的用途不仅仅限于服务器端的开发。从简单性、可测试性和松耦合性角度而言，绝大部分Java应用都可以从Spring中受益。 https://docs.spring.io/spring/docs/5.2.1.RELEASE/spring-framework-re">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-12-18T01:32:18.789Z">
+<meta property="og:updated_time" content="2019-12-18T02:53:51.186Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Spring Framework 浅析">
 <meta name="twitter:description" content="Spring框架是由于软件开发的复杂性而创建的。Spring使用的是基本的JavaBean来完成以前只可能由EJB完成的事情。然而，Spring的用途不仅仅限于服务器端的开发。从简单性、可测试性和松耦合性角度而言，绝大部分Java应用都可以从Spring中受益。 https://docs.spring.io/spring/docs/5.2.1.RELEASE/spring-framework-re">
-  <link rel="canonical" href="https://zhiyi.im/2019/12/16/spring_mvc/">
+  <link rel="canonical" href="https://zhiyi.im/2019/12/16/spring_framework/">
 
 
 <script id="page-configurations">
@@ -219,7 +219,7 @@
   
   
   <div class="post-block post">
-    <link itemprop="mainEntityOfPage" href="https://zhiyi.im/2019/12/16/spring_mvc/">
+    <link itemprop="mainEntityOfPage" href="https://zhiyi.im/2019/12/16/spring_framework/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="知一">
@@ -258,7 +258,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2019-12-18 09:32:18" itemprop="dateModified" datetime="2019-12-18T09:32:18+08:00">2019-12-18</time>
+                <time title="修改时间：2019-12-18 10:53:51" itemprop="dateModified" datetime="2019-12-18T10:53:51+08:00">2019-12-18</time>
               </span>
             
           
@@ -270,6 +270,27 @@
               </span>
               <span class="post-meta-item-text">阅读次数：</span>
               <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
+          
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">本文字数：</span>
+              
+              <span>3.3k</span>
+            </span>
+          
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              
+              <span>3 分钟</span>
             </span>
           
 
@@ -286,7 +307,9 @@
 <p><a href="https://docs.spring.io/spring/docs/5.2.1.RELEASE/spring-framework-reference/core.html" target="_blank" rel="noopener">https://docs.spring.io/spring/docs/5.2.1.RELEASE/spring-framework-reference/core.html</a></p>
 <a id="more"></a>
 
-<h1 id="spring-context-IOC"><a href="#spring-context-IOC" class="headerlink" title="spring-context | IOC"></a>spring-context | IOC</h1><h1 id="spring-aop"><a href="#spring-aop" class="headerlink" title="spring-aop"></a>spring-aop</h1><h1 id="spring-mvc"><a href="#spring-mvc" class="headerlink" title="spring-mvc"></a>spring-mvc</h1><p><a href="https://docs.spring.io/spring/docs/5.2.1.RELEASE/spring-framework-reference/web.html#mvc" target="_blank" rel="noopener">https://docs.spring.io/spring/docs/5.2.1.RELEASE/spring-framework-reference/web.html#mvc</a></p>
+
+<h1 id="spring-context-IOC"><a href="#spring-context-IOC" class="headerlink" title="spring-context | IOC"></a>spring-context | IOC</h1><p>如果项目中使用了Spring, 是不是意味着开发者不需要再去new object()，使用的过程中，只需要使用接口类即可， 这是因为Spring帮我们动态代理着，这个是JDK提供的方法。如果像知道什么动态代理，可以移步到另一篇文章mybatis解读 mybatis 动态代理 Mappper 一节。 spring 把这一行为定义为IOC，就是平时说的控制反转，本来应该由开发者去手动new的，改由框架自己干了。那到底是什么完成的呢。 如果要让框架自己完成实现类的注入，那前提是得告诉框架应该在哪里找，就是xml配置了。</p>
+<h1 id="spring-aop"><a href="#spring-aop" class="headerlink" title="spring-aop"></a>spring-aop</h1><h1 id="spring-mvc"><a href="#spring-mvc" class="headerlink" title="spring-mvc"></a>spring-mvc</h1><p><a href="https://docs.spring.io/spring/docs/5.2.1.RELEASE/spring-framework-reference/web.html#mvc" target="_blank" rel="noopener">https://docs.spring.io/spring/docs/5.2.1.RELEASE/spring-framework-reference/web.html#mvc</a></p>
 <p>Spring Web MVC是在Servlet API上构建的原始Web框架，从一开始就包含在Spring框架中。其正式名称“Spring Web MVC”来自其源模块(Spring-webmvc)的名称，但它更常见的名称是“Spring MVC”。</p>
 <h2 id="启动流程分析"><a href="#启动流程分析" class="headerlink" title="启动流程分析"></a>启动流程分析</h2><p>spring-mvc 是放在servlet容器里面跑的，例如tomcat。为什么需要这个容器，因为你需要有人帮你管理连接。<br>创建一个servlet，并且当外部访问这个servlet的时候，会转发到spring-mvc的前端路由上，就是赋值管理controller list，从而去执行service里面的方法。</p>
 <p>servlet可以通过xml文件，以及class文件创建</p>
@@ -338,8 +361,8 @@
           <div class="post-nav">
             <div class="post-nav-next post-nav-item">
               
-                <a href="/2019/11/30/jvm/" rel="next" title="Java Thread 浅析">
-                  <i class="fa fa-chevron-left"></i> Java Thread 浅析
+                <a href="/2019/11/22/mybatis/" rel="next" title="Mybatis 浅析">
+                  <i class="fa fa-chevron-left"></i> Mybatis 浅析
                 </a>
               
             </div>
@@ -416,7 +439,7 @@
         
           <a href="/archives/">
         
-          <span class="site-state-item-count">6</span>
+          <span class="site-state-item-count">3</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -466,6 +489,16 @@
     <i class="fa fa-user"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">知一</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    <span title="站点总字数">38k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">35 分钟</span>
 </div>
 
         
@@ -563,7 +596,7 @@
       repo: 'gitalk',
       owner: 'taoroot',
       admin: ['taoroot'],
-      id: '441349e2dfbdce19954b01d8f0978ba0',
+      id: '7ff8356603cbf614b7673dcd5381bffb',
         language: 'zh-CN',
       
       distractionFreeMode: 'true'

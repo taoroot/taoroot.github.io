@@ -2,44 +2,23 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://zhiyi.im/2019/11/22/mybatis/</loc>
+    
+    <lastmod>2019-12-18T04:11:02.129Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://zhiyi.im/2019/12/16/spring_framework/</loc>
+    
+    <lastmod>2019-12-18T02:53:51.186Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://zhiyi.im/2019/09/11/netty_iot/</loc>
     
     <lastmod>2019-12-18T02:28:39.599Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://zhiyi.im/2019/10/25/threejs/</loc>
-    
-    <lastmod>2019-12-18T01:59:39.736Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://zhiyi.im/2019/11/22/mybatis/</loc>
-    
-    <lastmod>2019-12-18T01:34:38.773Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://zhiyi.im/2019/10/23/spring_security/</loc>
-    
-    <lastmod>2019-12-18T01:32:47.086Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://zhiyi.im/2019/12/16/spring_mvc/</loc>
-    
-    <lastmod>2019-12-18T01:32:18.789Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://zhiyi.im/2019/11/30/jvm/</loc>
-    
-    <lastmod>2019-12-18T01:27:27.445Z</lastmod>
     
   </url>
   
