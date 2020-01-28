@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>https://zhiyi.im/2020/01/28/spring_2_refresh/</loc>
+    <lastmod>2020-01-28</lastmod>
+  </url>  <url>
     <loc>https://zhiyi.im/2020/01/28/spring_1_run/</loc>
     <lastmod>2020-01-28</lastmod>
   </url>  <url>
     <loc>https://zhiyi.im/2019/09/11/netty_iot/</loc>
-    <lastmod>2019-12-18</lastmod>
+    <lastmod>2020-01-28</lastmod>
   </url>
 </urlset>

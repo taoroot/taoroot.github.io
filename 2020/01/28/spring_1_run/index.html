@@ -28,13 +28,13 @@
   var NexT = window.NexT || {};
   var CONFIG = {
     root: '/',
-    scheme: 'Gemini',
+    scheme: 'Pisces',
     version: '7.4.0',
     exturl: false,
     sidebar: {"position":"right","width":270,"display":"always","offset":12,"onmobile":false},
     copycode: {"enable":true,"show_result":"default","style":"flat"},
-    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
-    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    back2top: {"enable":true,"sidebar":true,"scrollpercent":true},
+    bookmark: {"enable":true,"color":"#222","save":"auto"},
     fancybox: false,
     mediumzoom: false,
     lazyload: false,
@@ -58,17 +58,14 @@
   };
 </script>
 
-  <meta name="description" content="记录SpringBoot源码学习过程。版本：2.1.6.RELEASE话不多说，开始上代码。">
-<meta property="og:type" content="article">
-<meta property="og:title" content="1.SpringBoot源码浅析之启动流程">
+  <meta property="og:type" content="article">
+<meta property="og:title" content="SpringBoot源码浅析一之启动流程">
 <meta property="og:url" content="https://zhiyi.im/2020/01/28/spring_1_run/index.html">
 <meta property="og:site_name" content="知一码源">
-<meta property="og:description" content="记录SpringBoot源码学习过程。版本：2.1.6.RELEASE话不多说，开始上代码。">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2020-01-28T08:58:34.128Z">
+<meta property="og:updated_time" content="2020-01-28T09:53:23.066Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="1.SpringBoot源码浅析之启动流程">
-<meta name="twitter:description" content="记录SpringBoot源码学习过程。版本：2.1.6.RELEASE话不多说，开始上代码。">
+<meta name="twitter:title" content="SpringBoot源码浅析一之启动流程">
   <link rel="canonical" href="https://zhiyi.im/2020/01/28/spring_1_run/">
 
 
@@ -83,7 +80,7 @@
   };
 </script>
 
-  <title>1.SpringBoot源码浅析之启动流程 | 知一码源</title>
+  <title>SpringBoot源码浅析一之启动流程 | 知一码源</title>
   <meta name="generator" content="Hexo 3.9.0">
   
 
@@ -144,6 +141,8 @@
         <span class="logo-line-after"><i></i></span>
       </a>
     </div>
+        <p class="site-subtitle">知行合一</p>
+      
   </div>
 
   <div class="site-nav-toggle">
@@ -199,10 +198,8 @@
     </header>
 
     
-  <div class="back-to-top">
-    <i class="fa fa-arrow-up"></i>
-    <span>0%</span>
-  </div>
+  <div class="reading-progress-bar"></div>
+  <a class="book-mark-link book-mark-link-fixed" href="#"></a>
 
 
     <main id="main" class="main">
@@ -223,15 +220,15 @@
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="知一">
-      <meta itemprop="description" content="水火有气而无生 草木有生而无知">
-      <meta itemprop="image" content="/images/qrcode.jpg">
+      <meta itemprop="description" content="水火有气而无生,草木有生而无知。<br/> 本心之明即知,不欺本心之明即行。">
+      <meta itemprop="image" content="http://cdn.flizi.cn/img/zhiyi-avatar.jpg">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="知一码源">
     </span>
       <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">1.SpringBoot源码浅析之启动流程
+        <h1 class="post-title" itemprop="name headline">SpringBoot源码浅析一之启动流程
 
           
         </h1>
@@ -247,7 +244,7 @@
                 
               
 
-              <time title="创建时间：2020-01-28 15:57:39 / 修改时间：16:58:34" itemprop="dateCreated datePublished" datetime="2020-01-28T15:57:39+08:00">2020-01-28</time>
+              <time title="创建时间：2020-01-28 15:57:39 / 修改时间：17:53:23" itemprop="dateCreated datePublished" datetime="2020-01-28T15:57:39+08:00">2020-01-28</time>
             </span>
           
             
@@ -264,13 +261,11 @@
               <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
             </span>
           
-          <br>
+          
             <span class="post-meta-item" title="本文字数">
               <span class="post-meta-item-icon">
                 <i class="fa fa-file-word-o"></i>
               </span>
-              
-                <span class="post-meta-item-text">本文字数：</span>
               
               <span>12k</span>
             </span>
@@ -279,8 +274,6 @@
               <span class="post-meta-item-icon">
                 <i class="fa fa-clock-o"></i>
               </span>
-              
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
               
               <span>11 分钟</span>
             </span>
@@ -295,7 +288,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>记录SpringBoot源码学习过程。<br>版本：2.1.6.RELEASE<br>话不多说，开始上代码。</p><a id="more"></a>
+        <a id="more"></a><p></p>
 <h1 id="MyApplication"><a href="#MyApplication" class="headerlink" title="MyApplication"></a>MyApplication</h1><p>spring boot 简单的配置即可启动程序。</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@SpringBootApplication</span> </span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyApplication</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        SpringApplication.run(MyApplication.class, args);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
@@ -350,7 +343,7 @@
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">postProcessApplicationContext</span><span class="params">(ConfigurableApplicationContext context)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">this</span>.beanNameGenerator != <span class="keyword">null</span>) &#123;</span><br><span class="line">       context.getBeanFactory().registerSingleton(AnnotationConfigUtils.CONFIGURATION_BEAN_NAME_GENERATOR,</span><br><span class="line">                <span class="keyword">this</span>.beanNameGenerator); <span class="comment">// 注入命名生成器</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 把SpringApplication的resourceLoader设置到spring中去。</span></span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">this</span>.resourceLoader != <span class="keyword">null</span>) &#123;</span><br><span class="line">        <span class="keyword">if</span> (context <span class="keyword">instanceof</span> GenericApplicationContext) &#123;</span><br><span class="line">            ((GenericApplicationContext) context).setResourceLoader(<span class="keyword">this</span>.resourceLoader); </span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (context <span class="keyword">instanceof</span> DefaultResourceLoader) &#123;</span><br><span class="line">            ((DefaultResourceLoader) context).setClassLoader(<span class="keyword">this</span>.resourceLoader.getClassLoader());</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">this</span>.addConversionService) &#123;</span><br><span class="line">        context.getBeanFactory().setConversionService(ApplicationConversionService.getSharedInstance());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <h2 id="ApplicationContext-刷新"><a href="#ApplicationContext-刷新" class="headerlink" title="ApplicationContext 刷新"></a>ApplicationContext 刷新</h2><p>这里面就是Spring的核心流程，之前的所有操作都是准备操作。<br>在这里将涉及到IOC，web容器的是初始化。内容过多，需要在下一篇文章再讲。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">refreshContext</span><span class="params">(ConfigurableApplicationContext context)</span> </span>&#123;</span><br><span class="line">	refresh(context);</span><br><span class="line">	<span class="keyword">if</span> (<span class="keyword">this</span>.registerShutdownHook) &#123;</span><br><span class="line">		<span class="keyword">try</span> &#123;</span><br><span class="line">			context.registerShutdownHook();</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">catch</span> (AccessControlException ex) &#123;</span><br><span class="line">			<span class="comment">// Not allowed in some environments.</span></span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">refreshContext</span><span class="params">(ConfigurableApplicationContext context)</span> </span>&#123;</span><br><span class="line">    refresh(context);</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">this</span>.registerShutdownHook) &#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            context.registerShutdownHook();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">catch</span> (AccessControlException ex) &#123;</span><br><span class="line">            <span class="comment">// Not allowed in some environments.</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>Spring boot的启动流程，就是创建一个SpringApplication并调用run方法的过程。</p>
 <p>构造器：</p>
@@ -409,8 +402,8 @@
           <div class="post-nav">
             <div class="post-nav-next post-nav-item">
               
-                <a href="/2019/09/11/netty_iot/" rel="next" title="Netty 物联网通信协议架构 浅析">
-                  <i class="fa fa-chevron-left"></i> Netty 物联网通信协议架构 浅析
+                <a href="/2019/09/11/netty_iot/" rel="next" title="Netty 物联网通信协议架构设计">
+                  <i class="fa fa-chevron-left"></i> Netty 物联网通信协议架构设计
                 </a>
               
             </div>
@@ -418,6 +411,10 @@
             <span class="post-nav-divider"></span>
 
             <div class="post-nav-prev post-nav-item">
+              
+                <a href="/2020/01/28/spring_2_refresh/" rel="prev" title="SpringBoot源码浅析二之容器刷新">
+                  SpringBoot源码浅析二之容器刷新 <i class="fa fa-chevron-right"></i>
+                </a>
               
             </div>
           </div>
@@ -477,17 +474,17 @@
       <div class="site-overview-wrap sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
     <img class="site-author-image" itemprop="image"
-      src="/images/qrcode.jpg"
+      src="http://cdn.flizi.cn/img/zhiyi-avatar.jpg"
       alt="知一">
   <p class="site-author-name" itemprop="name">知一</p>
-  <div class="site-description" itemprop="description">水火有气而无生 草木有生而无知</div>
+  <div class="site-description" itemprop="description">水火有气而无生,草木有生而无知。<br/> 本心之明即知,不欺本心之明即行。</div>
 </div>
   <nav class="site-state motion-element">
       <div class="site-state-item site-state-posts">
         
           <a href="/archives/">
         
-          <span class="site-state-item-count">2</span>
+          <span class="site-state-item-count">3</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -521,6 +518,11 @@
 
 
       </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+      
 
     </div>
   </aside>
@@ -541,12 +543,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-area-chart"></i>
     </span>
-    <span title="站点总字数">17k</span>
+    <span title="站点总字数">31k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">15 分钟</span>
+    <span title="站点阅读时长">28 分钟</span>
 </div>
 
         
@@ -592,8 +594,7 @@
   <script src="/lib/anime.min.js?v=3.1.0"></script>
 <script src="/js/utils.js?v=7.4.0"></script>
 <script src="/js/schemes/pisces.js?v=7.4.0"></script>
-
-<script src="/js/next-boot.js?v=7.4.0"></script>
+<script src="/js/next-boot.js?v=7.4.0"></script><script src="/js/bookmark.js?v=7.4.0"></script>
 
 
 

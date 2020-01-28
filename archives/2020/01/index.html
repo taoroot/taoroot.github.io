@@ -28,13 +28,13 @@
   var NexT = window.NexT || {};
   var CONFIG = {
     root: '/',
-    scheme: 'Gemini',
+    scheme: 'Pisces',
     version: '7.4.0',
     exturl: false,
     sidebar: {"position":"right","width":270,"display":"always","offset":12,"onmobile":false},
     copycode: {"enable":true,"show_result":"default","style":"flat"},
-    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
-    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    back2top: {"enable":true,"sidebar":true,"scrollpercent":true},
+    bookmark: {"enable":true,"color":"#222","save":"auto"},
     fancybox: false,
     mediumzoom: false,
     lazyload: false,
@@ -58,16 +58,16 @@
   };
 </script>
 
-  <meta name="description" content="水火有气而无生 草木有生而无知">
+  <meta name="description" content="水火有气而无生,草木有生而无知。 本心之明即知,不欺本心之明即行。">
 <meta property="og:type" content="website">
 <meta property="og:title" content="知一码源">
 <meta property="og:url" content="https://zhiyi.im/archives/2020/01/index.html">
 <meta property="og:site_name" content="知一码源">
-<meta property="og:description" content="水火有气而无生 草木有生而无知">
+<meta property="og:description" content="水火有气而无生,草木有生而无知。 本心之明即知,不欺本心之明即行。">
 <meta property="og:locale" content="zh-CN">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="知一码源">
-<meta name="twitter:description" content="水火有气而无生 草木有生而无知">
+<meta name="twitter:description" content="水火有气而无生,草木有生而无知。 本心之明即知,不欺本心之明即行。">
   <link rel="canonical" href="https://zhiyi.im/archives/2020/01/">
 
 
@@ -143,6 +143,8 @@
         <span class="logo-line-after"><i></i></span>
       </a>
     </div>
+        <p class="site-subtitle">知行合一</p>
+      
   </div>
 
   <div class="site-nav-toggle">
@@ -198,10 +200,8 @@
     </header>
 
     
-  <div class="back-to-top">
-    <i class="fa fa-arrow-up"></i>
-    <span>0%</span>
-  </div>
+  <div class="reading-progress-bar"></div>
+  <a class="book-mark-link book-mark-link-fixed" href="#"></a>
 
 
     <main id="main" class="main">
@@ -238,7 +238,7 @@
         
           
         
-        <span class="collection-header">嗯..! 目前共计 2 篇日志。 继续努力。</span>
+        <span class="collection-header">嗯..! 目前共计 3 篇日志。 继续努力。</span>
       </div>
       
 
@@ -259,8 +259,37 @@
 
       <h2 class="post-title">
         
+          <a class="post-title-link" href="/2020/01/28/spring_2_refresh/" itemprop="url">
+            <span itemprop="name">SpringBoot源码浅析二之容器刷新</span>
+          </a>
+        
+      </h2>
+
+      <div class="post-meta">
+        <time class="post-time" itemprop="dateCreated"
+              datetime="2020-01-28T17:15:37+08:00"
+              content="2020-01-28">
+          01-28
+        </time>
+      </div>
+
+    </header>
+  </article>
+
+
+
+  
+  
+
+  
+
+  <article itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      <h2 class="post-title">
+        
           <a class="post-title-link" href="/2020/01/28/spring_1_run/" itemprop="url">
-            <span itemprop="name">1.SpringBoot源码浅析之启动流程</span>
+            <span itemprop="name">SpringBoot源码浅析一之启动流程</span>
           </a>
         
       </h2>
@@ -323,17 +352,17 @@
       <div class="site-overview-wrap sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
     <img class="site-author-image" itemprop="image"
-      src="/images/qrcode.jpg"
+      src="http://cdn.flizi.cn/img/zhiyi-avatar.jpg"
       alt="知一">
   <p class="site-author-name" itemprop="name">知一</p>
-  <div class="site-description" itemprop="description">水火有气而无生 草木有生而无知</div>
+  <div class="site-description" itemprop="description">水火有气而无生,草木有生而无知。<br/> 本心之明即知,不欺本心之明即行。</div>
 </div>
   <nav class="site-state motion-element">
       <div class="site-state-item site-state-posts">
         
           <a href="/archives/">
         
-          <span class="site-state-item-count">2</span>
+          <span class="site-state-item-count">3</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -367,6 +396,11 @@
 
 
       </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+      
 
     </div>
   </aside>
@@ -387,12 +421,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-area-chart"></i>
     </span>
-    <span title="站点总字数">17k</span>
+    <span title="站点总字数">31k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">15 分钟</span>
+    <span title="站点阅读时长">28 分钟</span>
 </div>
 
         
@@ -438,8 +472,7 @@
   <script src="/lib/anime.min.js?v=3.1.0"></script>
 <script src="/js/utils.js?v=7.4.0"></script>
 <script src="/js/schemes/pisces.js?v=7.4.0"></script>
-
-<script src="/js/next-boot.js?v=7.4.0"></script>
+<script src="/js/next-boot.js?v=7.4.0"></script><script src="/js/bookmark.js?v=7.4.0"></script>
 
 
 
