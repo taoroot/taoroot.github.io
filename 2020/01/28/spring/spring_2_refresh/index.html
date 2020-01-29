@@ -56,15 +56,16 @@
   };
 </script>
 
-  <meta property="og:type" content="article">
-<meta property="og:title" content="SpringBoot源码浅析二之容器刷新">
-<meta property="og:url" content="https://zhiyi.im/2020/01/28/spring_2_refresh/index.html">
+  <meta name="keywords" content="SpringBoot源码分析">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SpringBoot源码分析二之容器刷新">
+<meta property="og:url" content="https://zhiyi.im/2020/01/28/spring/spring_2_refresh/index.html">
 <meta property="og:site_name" content="知一码源">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2020-01-28T10:09:35.810Z">
+<meta property="og:updated_time" content="2020-01-29T02:55:34.452Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="SpringBoot源码浅析二之容器刷新">
-  <link rel="canonical" href="https://zhiyi.im/2020/01/28/spring_2_refresh/">
+<meta name="twitter:title" content="SpringBoot源码分析二之容器刷新">
+  <link rel="canonical" href="https://zhiyi.im/2020/01/28/spring/spring_2_refresh/">
 
 
 <script id="page-configurations">
@@ -78,7 +79,7 @@
   };
 </script>
 
-  <title>SpringBoot源码浅析二之容器刷新 | 知一码源</title>
+  <title>SpringBoot源码分析二之容器刷新 | 知一码源</title>
   <meta name="generator" content="Hexo 3.9.0">
   
 
@@ -139,8 +140,6 @@
         <span class="logo-line-after"><i></i></span>
       </a>
     </div>
-        <p class="site-subtitle">知行合一</p>
-      
   </div>
 
   <div class="site-nav-toggle">
@@ -160,22 +159,11 @@
       
       
         
-        <li class="menu-item menu-item-home">
+        <li class="menu-item menu-item-tags">
       
     
 
-    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
-
-  </li>
-      
-      
-      
-        
-        <li class="menu-item menu-item-about">
-      
-    
-
-    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
 
   </li>
       
@@ -189,6 +177,17 @@
     <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
 
   </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-about">
+      
+    
+
+    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
+
+  </li>
   </ul>
 
 </nav>
@@ -196,7 +195,6 @@
     </header>
 
     
-  <div class="reading-progress-bar"></div>
   <a class="book-mark-link book-mark-link-fixed" href="#"></a>
 
 
@@ -214,7 +212,7 @@
   
   
   <div class="post-block post">
-    <link itemprop="mainEntityOfPage" href="https://zhiyi.im/2020/01/28/spring_2_refresh/">
+    <link itemprop="mainEntityOfPage" href="https://zhiyi.im/2020/01/28/spring/spring_2_refresh/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="知一">
@@ -226,7 +224,7 @@
       <meta itemprop="name" content="知一码源">
     </span>
       <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">SpringBoot源码浅析二之容器刷新
+        <h1 class="post-title" itemprop="name headline">SpringBoot源码分析二之容器刷新
 
           
         </h1>
@@ -242,38 +240,31 @@
                 
               
 
-              <time title="创建时间：2020-01-28 17:15:37 / 修改时间：18:09:35" itemprop="dateCreated datePublished" datetime="2020-01-28T17:15:37+08:00">2020-01-28</time>
+              <time title="创建时间：2020-01-28 17:15:37" itemprop="dateCreated datePublished" datetime="2020-01-28T17:15:37+08:00">2020-01-28</time>
             </span>
           
             
 
             
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-01-29 10:55:34" itemprop="dateModified" datetime="2020-01-29T10:55:34+08:00">2020-01-29</time>
+              </span>
+            
           
 
           
-            <span class="post-meta-item" title="阅读次数">
+            <span class="post-meta-item" title="人数">
               <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
+                <i class="fa fa-user"></i>
               </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
-            </span>
-          
-          
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-file-word-o"></i>
-              </span>
-              
-              <span>14k</span>
-            </span>
-          
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-clock-o"></i>
-              </span>
-              
-              <span>13 分钟</span>
+              <span class="post-meta-item-text">人数：</span>
+              <!-- <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>-->
+              <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+
             </span>
           
 
@@ -335,14 +326,23 @@
       
 
       <footer class="post-footer">
+          
+            
+          
+          <div class="post-tags">
+            
+              <a href="/tags/SpringBoot源码分析/" rel="tag"># SpringBoot源码分析</a>
+            
+          </div>
+        
 
         
 
           <div class="post-nav">
             <div class="post-nav-next post-nav-item">
               
-                <a href="/2020/01/28/spring_1_run/" rel="next" title="SpringBoot源码浅析一之启动流程">
-                  <i class="fa fa-chevron-left"></i> SpringBoot源码浅析一之启动流程
+                <a href="/2020/01/28/spring/spring_1_run/" rel="next" title="SpringBoot源码分析一之启动流程">
+                  <i class="fa fa-chevron-left"></i> SpringBoot源码分析一之启动流程
                 </a>
               
             </div>
@@ -407,13 +407,15 @@
       <!--/noindex-->
 
       <div class="site-overview-wrap sidebar-panel">
-        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <!--
+<div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
     <img class="site-author-image" itemprop="image"
       src="http://cdn.flizi.cn/img/zhiyi-avatar.jpg"
       alt="知一">
   <p class="site-author-name" itemprop="name">知一</p>
   <div class="site-description" itemprop="description">水火有气而无生,草木有生而无知。<br/> 本心之明即知,不欺本心之明即行。</div>
 </div>
+-->
   <nav class="site-state motion-element">
       <div class="site-state-item site-state-posts">
         
@@ -421,6 +423,23 @@
         
           <span class="site-state-item-count">3</span>
           <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+    
+      
+      
+      <div class="site-state-item site-state-tags">
+        
+          
+            <a href="/tags/">
+          
+        
+        
+        
+          
+        
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">标签</span>
         </a>
       </div>
     
@@ -474,37 +493,11 @@
     <i class="fa fa-user"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">知一</span>
-    <span class="post-meta-divider">|</span>
-    <span class="post-meta-item-icon">
-      <i class="fa fa-area-chart"></i>
-    </span>
-    <span title="站点总字数">31k</span>
-    <span class="post-meta-divider">|</span>
-    <span class="post-meta-item-icon">
-      <i class="fa fa-coffee"></i>
-    </span>
-    <span title="站点阅读时长">28 分钟</span>
 </div>
 
         
 <div class="busuanzi-count">
   <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-    <span class="post-meta-item-icon">
-      <i class="fa fa-user"></i>
-    </span>
-    <span class="site-uv" title="总访客量">
-      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
-    </span>
-  
-    <span class="post-meta-divider">|</span>
-  
-    <span class="post-meta-item-icon">
-      <i class="fa fa-eye"></i>
-    </span>
-    <span class="site-pv" title="总访问量">
-      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
-    </span>
-  
 </div>
 
 
@@ -580,7 +573,7 @@
       repo: 'gitalk',
       owner: 'taoroot',
       admin: ['taoroot'],
-      id: '20e364ba35090bca500c020bd2e9678b',
+      id: '6f674ceb1e17bb46e0d9cf6cd3c0f8ac',
         language: 'zh-CN',
       
       distractionFreeMode: 'true'
