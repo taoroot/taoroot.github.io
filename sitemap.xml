@@ -2,9 +2,23 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://zhiyi.im/2020/01/31/index/</loc>
+    
+    <lastmod>2020-02-01T02:45:43.630Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://zhiyi.im/2020/01/30/spring/spring_3_ioc/</loc>
     
-    <lastmod>2020-01-31T08:13:13.092Z</lastmod>
+    <lastmod>2020-02-01T02:43:12.750Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://zhiyi.im/2019/11/22/mybatis/mybatis/</loc>
+    
+    <lastmod>2020-02-01T02:42:39.895Z</lastmod>
     
   </url>
   
@@ -12,13 +26,6 @@
     <loc>https://zhiyi.im/2020/01/28/spring/spring_2_refresh/</loc>
     
     <lastmod>2020-01-31T07:19:17.015Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://zhiyi.im/2020/01/31/index/</loc>
-    
-    <lastmod>2020-01-31T07:14:01.741Z</lastmod>
     
   </url>
   

@@ -56,17 +56,17 @@
   };
 </script>
 
-  <meta name="description" content="SpringSpringBoot源码分析一之启动流程   SpringBoot源码分析二之刷新流程   SpringBoot源码分析三之依赖注入   Netty物联网通信协议架构设计">
+  <meta name="description" content="Springv2.1.6.RELEASE SpringBoot源码分析一之启动流程   SpringBoot源码分析二之刷新流程   SpringBoot源码分析三之依赖注入   Netty物联网通信协议架构设计   MyBatisMybatis 源码">
 <meta property="og:type" content="article">
 <meta property="og:title" content="目录">
 <meta property="og:url" content="https://zhiyi.im/2020/01/31/index/index.html">
 <meta property="og:site_name" content="知一码源">
-<meta property="og:description" content="SpringSpringBoot源码分析一之启动流程   SpringBoot源码分析二之刷新流程   SpringBoot源码分析三之依赖注入   Netty物联网通信协议架构设计">
+<meta property="og:description" content="Springv2.1.6.RELEASE SpringBoot源码分析一之启动流程   SpringBoot源码分析二之刷新流程   SpringBoot源码分析三之依赖注入   Netty物联网通信协议架构设计   MyBatisMybatis 源码">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2020-01-31T07:14:01.741Z">
+<meta property="og:updated_time" content="2020-02-01T02:45:43.630Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="目录">
-<meta name="twitter:description" content="SpringSpringBoot源码分析一之启动流程   SpringBoot源码分析二之刷新流程   SpringBoot源码分析三之依赖注入   Netty物联网通信协议架构设计">
+<meta name="twitter:description" content="Springv2.1.6.RELEASE SpringBoot源码分析一之启动流程   SpringBoot源码分析二之刷新流程   SpringBoot源码分析三之依赖注入   Netty物联网通信协议架构设计   MyBatisMybatis 源码">
   <link rel="canonical" href="https://zhiyi.im/2020/01/31/index/">
 
 
@@ -246,11 +246,19 @@
                 
               
 
-              <time title="创建时间：2020-01-31 14:54:54 / 修改时间：15:14:01" itemprop="dateCreated datePublished" datetime="2020-01-31T14:54:54+08:00">2020-01-31</time>
+              <time title="创建时间：2020-01-31 14:54:54" itemprop="dateCreated datePublished" datetime="2020-01-31T14:54:54+08:00">2020-01-31</time>
             </span>
           
             
 
+            
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-02-01 10:45:43" itemprop="dateModified" datetime="2020-02-01T10:45:43+08:00">2020-02-01</time>
+              </span>
             
           
 
@@ -275,13 +283,18 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h1 id="Spring"><a href="#Spring" class="headerlink" title="Spring"></a>Spring</h1><a href="/2020/01/28/spring/spring_1_run/" title="SpringBoot源码分析一之启动流程 <br/>">SpringBoot源码分析一之启动流程 <br></a>
+        <h1 id="Spring"><a href="#Spring" class="headerlink" title="Spring"></a>Spring</h1><p>v2.1.6.RELEASE</p>
+<a href="/2020/01/28/spring/spring_1_run/" title="SpringBoot源码分析一之启动流程 <br/>">SpringBoot源码分析一之启动流程 <br></a>
 
 <a href="/2020/01/28/spring/spring_2_refresh/" title="SpringBoot源码分析二之刷新流程 <br/>">SpringBoot源码分析二之刷新流程 <br></a>
 
 <a href="/2020/01/30/spring/spring_3_ioc/" title="SpringBoot源码分析三之依赖注入 <br/>">SpringBoot源码分析三之依赖注入 <br></a>
 
 <h1 id="Netty"><a href="#Netty" class="headerlink" title="Netty"></a>Netty</h1><a href="/2019/09/11/netty_iot/" title="物联网通信协议架构设计 <br/>">物联网通信协议架构设计 <br></a>
+
+<h1 id="MyBatis"><a href="#MyBatis" class="headerlink" title="MyBatis"></a>MyBatis</h1><a href="/2019/11/22/mybatis/mybatis/" title="Mybatis 源码 <br/>">Mybatis 源码 <br></a>
+
+<a id="more"></a>
     </div>
 
     
@@ -380,7 +393,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Spring"><span class="nav-number">1.</span> <span class="nav-text">Spring</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Netty"><span class="nav-number">2.</span> <span class="nav-text">Netty</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Spring"><span class="nav-number">1.</span> <span class="nav-text">Spring</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Netty"><span class="nav-number">2.</span> <span class="nav-text">Netty</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#MyBatis"><span class="nav-number">3.</span> <span class="nav-text">MyBatis</span></a></li></ol></div>
         
       </div>
       <!--/noindex-->
@@ -400,7 +413,7 @@
         
           <a href="/archives/">
         
-          <span class="site-state-item-count">5</span>
+          <span class="site-state-item-count">6</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
