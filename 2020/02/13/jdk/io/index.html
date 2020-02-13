@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+
+
+
+
+
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script data-ad-client="ca-pub-2254497149816955" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.4.0">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.4.0">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.4.0">
+  <link rel="mask-icon" href="/images/logo.svg?v=7.4.0" color="#222">
+
+<link rel="stylesheet" href="/css/main.css?v=7.4.0">
+
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/font-awesome@4/css/font-awesome.min.css">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '7.4.0',
+    exturl: false,
+    sidebar: {"position":"right","width":270,"display":"hide","offset":12,"onmobile":false},
+    copycode: {"enable":false,"show_result":"default","style":"flat"},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":true},
+    bookmark: {"enable":true,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: '',
+    motion: {"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpOut"}},
+    translation: {
+      copy_button: '复制',
+      copy_success: '复制成功',
+      copy_failure: '复制失败'
+    },
+    sidebarPadding: 40
+  };
+</script>
+
+  <meta name="description" content="流io系统即输入输出系统。概述Java 对象通过流来完成输出和输出。流是生产和消费信息的抽象。流通过Java的输入和输出系统与物理设备连接。尽管与他们连接的物理设备不尽相同，但所有流的行为具有相同的方式。因此，相同的输入/输出类和方法适用于所有类型的外部设备。这以为这一个输出输入流能够抽象多种不同类型输入；比如，磁盘我呢见，从键盘，从网络套接字。同样，一个输出流也可以输出到控制台，磁盘，或者相连网">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java I&#x2F;O系统">
+<meta property="og:url" content="https://zhiyi.im/2020/02/13/jdk/io/index.html">
+<meta property="og:site_name" content="知一码源">
+<meta property="og:description" content="流io系统即输入输出系统。概述Java 对象通过流来完成输出和输出。流是生产和消费信息的抽象。流通过Java的输入和输出系统与物理设备连接。尽管与他们连接的物理设备不尽相同，但所有流的行为具有相同的方式。因此，相同的输入/输出类和方法适用于所有类型的外部设备。这以为这一个输出输入流能够抽象多种不同类型输入；比如，磁盘我呢见，从键盘，从网络套接字。同样，一个输出流也可以输出到控制台，磁盘，或者相连网">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2020-02-13T16:05:19.878Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Java I&#x2F;O系统">
+<meta name="twitter:description" content="流io系统即输入输出系统。概述Java 对象通过流来完成输出和输出。流是生产和消费信息的抽象。流通过Java的输入和输出系统与物理设备连接。尽管与他们连接的物理设备不尽相同，但所有流的行为具有相同的方式。因此，相同的输入/输出类和方法适用于所有类型的外部设备。这以为这一个输出输入流能够抽象多种不同类型输入；比如，磁盘我呢见，从键盘，从网络套接字。同样，一个输出流也可以输出到控制台，磁盘，或者相连网">
+  <link rel="canonical" href="https://zhiyi.im/2020/02/13/jdk/io/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>Java I/O系统 | 知一码源</title>
+  <meta name="generator" content="Hexo 3.9.0">
+  
+
+
+  <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?b38d32b39d2af114b05e6b9633c504d3";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+  <div class="container">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">知一码源</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+      
+      
+      
+        
+        <li class="menu-item menu-item-tags">
+      
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-archives">
+      
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-about">
+      
+    
+
+    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
+
+  </li>
+  </ul>
+
+    
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <a class="book-mark-link book-mark-link-fixed" href="#"></a>
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+      <article itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block post">
+    <link itemprop="mainEntityOfPage" href="https://zhiyi.im/2020/02/13/jdk/io/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="知一">
+      <meta itemprop="description" content="水火有气而无生,草木有生而无知。<br/> 本心之明即知,不欺本心之明即行。">
+      <meta itemprop="image" content="http://cdn.flizi.cn/img/zhiyi-avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="知一码源">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">Java I/O系统
+
+          
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              
+                
+              
+
+              <time title="创建时间：2020-02-13 21:31:27" itemprop="dateCreated datePublished" datetime="2020-02-13T21:31:27+08:00">2020-02-13</time>
+            </span>
+          
+            
+
+            
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-02-14 00:05:19" itemprop="dateModified" datetime="2020-02-14T00:05:19+08:00">2020-02-14</time>
+              </span>
+            
+          
+
+          
+            <span class="post-meta-item" title="人数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-user"></i>
+              </span>
+              <span class="post-meta-item-text">人数：</span>
+              <!-- <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>-->
+              <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+
+            </span>
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="流"><a href="#流" class="headerlink" title="流"></a>流</h1><p>io系统即输入输出系统。</p><h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p>Java 对象通过流来完成输出和输出。流是生产和消费信息的抽象。流通过Java的输入和输出系统与物理设备连接。尽管与他们连接的物理设备不尽相同，但所有流的行为具有相同的方式。因此，相同的输入/输出类和方法适用于所有类型的外部设备。这以为这一个输出输入流能够抽象多种不同类型输入；比如，磁盘我呢见，从键盘，从网络套接字。同样，一个输出流也可以输出到控制台，磁盘，或者相连网络。流是处理输入/输出的一个洁净的方式。例如他不需要代码理解和网络的不同。Java中流的实现是在java.io包定义的类层次结构内部的。</p><a id="more"></a>
+
+<h2 id="分类"><a href="#分类" class="headerlink" title="分类"></a>分类</h2><p>从功能上分，流分为输出流和输入流。这是以应用程序作为参考系，如果从应用程序从外部读入数据，那么这就是输入流，如果是写出数据，那么就是输出流。<br>从流的结构上分，可分为字节流和字符流。字节流按照字节处理数据，字符流按照字符处理数据。</p>
+<p>字节流的输入和输出基础是InputStream/OutputStream这两个抽象类，字节流的输入和输出操作由这两个类的子类实现，因为java不同同时继承两个抽象类，所以所有流，不可能同时是输入又是输出流。<br>字符流是Java 1.1以后新增的以字符作为单位进行输入和输出处理的流。字符流的的输入和输出基础是Reader和Writer这两个接口。不过要注意，在最底层，所有的输入和输出都是字节形式的。基于字符的流只为了处理字符提供方便有效的方法。</p>
+<p>从流的读写对象可分为节点流和过滤流，节点流的读写对象是从特定设备读取。而过滤流的读写对象是其他流。 节点流 —&gt; 过滤流 —&gt; 过滤了 —&gt; 节点流。过滤流起到对流的包装，增强流的功能。也就是设计模式中的装饰者模式。</p>
+<h1 id="输入流"><a href="#输入流" class="headerlink" title="输入流"></a>输入流</h1><h2 id="如何读取数据"><a href="#如何读取数据" class="headerlink" title="如何读取数据"></a>如何读取数据</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">1. open a stream</span><br><span class="line">2. while more information</span><br><span class="line">3. read information</span><br><span class="line">4. close the stream</span><br></pre></td></tr></table></figure>
+
+<h2 id="INputStream"><a href="#INputStream" class="headerlink" title="INputStream"></a>INputStream</h2><h3 id="层次图"><a href="#层次图" class="headerlink" title="层次图"></a>层次图</h3><h3 id="常用方法"><a href="#常用方法" class="headerlink" title="常用方法"></a>常用方法</h3><p>read()： 读数据；avaliable() 获取输入流的字节数；skip，reset，mark：定位作用。</p>
+<h1 id="输出流"><a href="#输出流" class="headerlink" title="输出流"></a>输出流</h1><h3 id="层次图-1"><a href="#层次图-1" class="headerlink" title="层次图"></a>层次图</h3><h2 id="如何输出数据"><a href="#如何输出数据" class="headerlink" title="如何输出数据"></a>如何输出数据</h2><p>write(): 写数据；flush() 刷新缓存。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">1. open a stream</span><br><span class="line">2. while more information</span><br><span class="line">3. write information</span><br><span class="line">4. close the stream</span><br></pre></td></tr></table></figure>
+
+<h1 id="I-O流的链接"><a href="#I-O流的链接" class="headerlink" title="I/O流的链接"></a>I/O流的链接</h1><h1 id="装饰模式Decorator"><a href="#装饰模式Decorator" class="headerlink" title="装饰模式Decorator"></a>装饰模式Decorator</h1><h2 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h2><ol>
+<li>装饰模式又称包装模式(wrapper)</li>
+<li>装饰模式以对客户端透明的方式扩展对象的功能，是继承关系的一个替代方案。</li>
+<li>装饰模式以对客户端透明的方式动态的给一个对象附加更多的责任。换言之，客户端并不会觉得对象在装饰器和转世后有所不同。</li>
+<li>装饰模式可以在不创建更多子类的情况下，讲对象的功能进行扩张。</li>
+<li>装饰模式吧客户端的调用委派到被装饰类。装饰模式的关键在于这种扩展完全透明</li>
+<li>转世模式是在不必改变原来文件和使用继承的情况下动态的扩展一个对象的功能。他是通过创建一个包装对象，也就是装饰来包裹真是的对象。</li>
+</ol>
+<h2 id="角色"><a href="#角色" class="headerlink" title="角色"></a>角色</h2><p>抽象构件角色(Component): 给出一个抽象接口，以规范的准备接收附加责任的对象。</p>
+<p>具体构件角色(Concrete Component): 定义一个将要接收附加责任的类。</p>
+<p>装饰角色(Decorator): 持有一个构件，对象的应用，并定义要给与抽象接口一致的接口。</p>
+<p>具体装饰角色(Concrete Component)：负责给构件对象”贴上”附加的责任。</p>
+<h2 id="特点"><a href="#特点" class="headerlink" title="特点"></a>特点</h2><ol>
+<li>装饰对象和真是对象有相同的接口。这样客户端对象可以以和真是对象相同的方式和装饰对象交互。</li>
+<li>解释对象包含一个真是对的引用</li>
+<li>转世独享接收来自客户端的请求。吧这些请求转发真是的对象。</li>
+<li>装饰对象可以在转发这些请求以前或者以后附加一些附加功能。这些就确保了运行时，不用修改给定对象的结构就可以在外部附加功能。通常时通过继承来实现给定类的功能扩展.</li>
+</ol>
+<h2 id="装饰模式-VS-继承"><a href="#装饰模式-VS-继承" class="headerlink" title="装饰模式 VS 继承"></a>装饰模式 VS 继承</h2><p>装饰模式 VS 继承</p>
+<p>装饰模式</p>
+<pre><code>用来扩展特定对象的功能
+
+不需要子类
+
+动态
+
+运行时分配职责
+
+分支由于子类而导致负责的混乱
+
+更多的灵活性
+
+对于一个给定的对象，同时可能有不同的装饰对象。</code></pre><p>继承</p>
+<pre><code>需要子类
+
+静态
+
+编译分配
+
+不灵活</code></pre><h2 id="适用性"><a href="#适用性" class="headerlink" title="适用性"></a>适用性</h2><pre><code>透明且动态地调整对象的增加新职责而不影响其他对象。
+
+给对象郑家的职责在未来可能发生改变
+
+用子类扩展功能不实际的情况下。</code></pre>
+    </div>
+
+    
+    
+    
+        
+      
+        <div id="reward-container">
+  <div></div>
+  <button id="reward-button" disable="enable" onclick="var qr = document.getElementById(&quot;qr&quot;); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+        
+      
+      <div style="display: inline-block">
+        <img src="/images/wechatpay.png" alt="知一 微信支付">
+        <p>微信支付</p>
+      </div>
+        
+      
+      <div style="display: inline-block">
+        <img src="/images/alipay.png" alt="知一 支付宝">
+        <p>支付宝</p>
+      </div>
+
+  </div>
+</div>
+
+      
+
+      <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+              
+                <a href="/2020/02/13/netty/netty 介绍 copy/" rel="next" title="netty 介绍">
+                  <i class="fa fa-chevron-left"></i> netty 介绍
+                </a>
+              
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+              
+            </div>
+          </div>
+        
+      </footer>
+    
+  </div>
+  
+  
+  
+  </article>
+
+  </div>
+
+
+          </div>
+          
+    
+    <div class="comments" id="gitalk-container"></div>
+  
+
+        </div>
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+        
+        
+        
+        
+      
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#流"><span class="nav-number">1.</span> <span class="nav-text">流</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#概述"><span class="nav-number">1.1.</span> <span class="nav-text">概述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#分类"><span class="nav-number">1.2.</span> <span class="nav-text">分类</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#输入流"><span class="nav-number">2.</span> <span class="nav-text">输入流</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#如何读取数据"><span class="nav-number">2.1.</span> <span class="nav-text">如何读取数据</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#INputStream"><span class="nav-number">2.2.</span> <span class="nav-text">INputStream</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#层次图"><span class="nav-number">2.2.1.</span> <span class="nav-text">层次图</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#常用方法"><span class="nav-number">2.2.2.</span> <span class="nav-text">常用方法</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#输出流"><span class="nav-number">3.</span> <span class="nav-text">输出流</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#层次图-1"><span class="nav-number">3.0.1.</span> <span class="nav-text">层次图</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#如何输出数据"><span class="nav-number">3.1.</span> <span class="nav-text">如何输出数据</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#I-O流的链接"><span class="nav-number">4.</span> <span class="nav-text">I/O流的链接</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#装饰模式Decorator"><span class="nav-number">5.</span> <span class="nav-text">装饰模式Decorator</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#概念"><span class="nav-number">5.1.</span> <span class="nav-text">概念</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#角色"><span class="nav-number">5.2.</span> <span class="nav-text">角色</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#特点"><span class="nav-number">5.3.</span> <span class="nav-text">特点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#装饰模式-VS-继承"><span class="nav-number">5.4.</span> <span class="nav-text">装饰模式 VS 继承</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#适用性"><span class="nav-number">5.5.</span> <span class="nav-text">适用性</span></a></li></ol></li></ol></div>
+        
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <!--
+<div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image"
+      src="http://cdn.flizi.cn/img/zhiyi-avatar.jpg"
+      alt="知一">
+  <p class="site-author-name" itemprop="name">知一</p>
+  <div class="site-description" itemprop="description">水火有气而无生,草木有生而无知。<br/> 本心之明即知,不欺本心之明即行。</div>
+</div>
+-->
+  <nav class="site-state motion-element">
+      <div class="site-state-item site-state-posts">
+        
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">11</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+    
+      
+      
+      <div class="site-state-item site-state-tags">
+        
+          
+            <a href="/tags/">
+          
+        
+        
+        
+          
+        
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">标签</span>
+        </a>
+      </div>
+    
+  </nav>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+      
+      
+        
+      
+      
+        
+      
+        <a href="https://github.com/taoroot" title="GitHub &rarr; https://github.com/taoroot" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+    
+      <span class="links-of-author-item">
+      
+      
+        
+      
+      
+        
+      
+        <a href="mailto:lujiantaoxyz@outlook.com" title="E-Mail &rarr; mailto:lujiantaoxyz@outlook.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+      </span>
+    
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2018 – <span itemprop="copyrightYear">2020</span>
+  <!-- <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span> -->
+  <span class="author" itemprop="copyrightHolder">知一</span>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+
+
+  <script src="//cdn.jsdelivr.net/npm/animejs@3.1.0/lib/anime.min.js"></script>
+<script src="/js/utils.js?v=7.4.0"></script>
+<script src="/js/schemes/muse.js?v=7.4.0"></script>
+
+<script src="/js/next-boot.js?v=7.4.0"></script><script src="/js/bookmark.js?v=7.4.0"></script>
+
+
+
+  
+  <script>
+    (function(){
+      var bp = document.createElement('script');
+      var curProtocol = window.location.protocol.split(':')[0];
+      bp.src = (curProtocol === 'https') ? 'https://zz.bdstatic.com/linksubmit/push.js' : 'http://push.zhanzhang.baidu.com/push.js';
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(bp, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.css">
+
+<script>
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js', () => {
+    var gitalk = new Gitalk({
+      clientID: '67a09a8973729dc0ba56',
+      clientSecret: 'd50fff7ff5ba2c8a01e82834414a64b78816ce61',
+      repo: 'gitalk',
+      owner: 'taoroot',
+      admin: ['taoroot'],
+      id: 'f1f0575e546e6652cd73cb2d08f03e0b',
+        language: 'zh-CN',
+      
+      distractionFreeMode: 'true'
+    });
+    gitalk.render('gitalk-container');
+  }, window.Gitalk);
+</script>
+
+</body>
+</html>
