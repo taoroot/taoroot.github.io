@@ -2,7 +2,19 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://zhiyi.im/2020/01/31/index/</loc>
-    <lastmod>2020-02-13</lastmod>
+    <lastmod>2020-02-16</lastmod>
+  </url>  <url>
+    <loc>https://zhiyi.im/2020/02/14/jdk/nio/</loc>
+    <lastmod>2020-02-16</lastmod>
+  </url>  <url>
+    <loc>https://zhiyi.im/2020/02/15/netty/buffer/</loc>
+    <lastmod>2020-02-15</lastmod>
+  </url>  <url>
+    <loc>https://zhiyi.im/2020/02/15/netty/netty-boot-starter/</loc>
+    <lastmod>2020-02-15</lastmod>
+  </url>  <url>
+    <loc>https://zhiyi.im/2019/09/11/netty_iot/</loc>
+    <lastmod>2020-02-15</lastmod>
   </url>  <url>
     <loc>https://zhiyi.im/2020/02/13/jdk/io/</loc>
     <lastmod>2020-02-13</lastmod>
@@ -12,9 +24,6 @@
   </url>  <url>
     <loc>https://zhiyi.im/2020/02/13/netty/netty%20%E4%BB%8B%E7%BB%8D/</loc>
     <lastmod>2020-02-13</lastmod>
-  </url>  <url>
-    <loc>https://zhiyi.im/2019/09/11/netty_iot/</loc>
-    <lastmod>2020-02-04</lastmod>
   </url>  <url>
     <loc>https://zhiyi.im/2020/01/28/spring/spring_1_run/</loc>
     <lastmod>2020-02-03</lastmod>
