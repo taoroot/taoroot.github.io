@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://zhiyi.im/2019/09/11/netty_iot/</loc>
+    
+    <lastmod>2020-03-21T06:44:32.013Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://zhiyi.im/2020/01/31/index/</loc>
     
     <lastmod>2020-02-16T08:26:32.806Z</lastmod>
@@ -26,13 +33,6 @@
     <loc>https://zhiyi.im/2020/02/15/netty/netty-boot-starter/</loc>
     
     <lastmod>2020-02-15T14:03:03.095Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://zhiyi.im/2019/09/11/netty_iot/</loc>
-    
-    <lastmod>2020-02-15T03:50:18.088Z</lastmod>
     
   </url>
   
