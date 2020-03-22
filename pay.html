@@ -70,7 +70,7 @@
             },
             openVideo() {
                 if (!this.token) {
-                    axios.get(`http://api.flizi.cn/blog/mp_callback/${this.uuid}`).then(response => {
+                    axios.get(`https://api.flizi.cn/blog/mp_callback/${this.uuid}`).then(response => {
                         if (response.data.result === 0) {
                             var token = response.data.data
                             if (token) {
@@ -85,7 +85,7 @@
                 }
             },
             getVideo() {
-                axios.get(`http://api.flizi.cn/blog/video/${this.goodId}?token=${this.token}`).then(response => {
+                axios.get(`https://api.flizi.cn/blog/video/${this.goodId}?token=${this.token}`).then(response => {
                     if (response.data.result === 0) {
                         this.show = true
                         this.dp.switchVideo({
