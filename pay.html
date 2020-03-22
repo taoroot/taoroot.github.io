@@ -15,14 +15,14 @@
 <body>
     <div id="app">
         <div v-if="!show">
-            <h2>支持 微信/支付宝, 支付以后将自动跳转到播放界面</h2>
-            <h2>如果已再其他电脑上支付过, 只需要重新用微信或支付宝扫一下二维码(不需要再次付款)</h2>
+            <h2>支持 微信/支付宝</h2>
+            <h2>如果已在其他电脑支付过, 只需重新扫一下二维码(不需要再次付款)</h2>
             
             <div>
                 <qrcode :value="url" :options="{ width: 150 }">
             </qrcode></div>
         </div>
-        <h4 style="text-align: center; color: darkcyan;">视频加载失败,刷新一下页面</h4>
+        <h4 v-show="show" style="text-align: center; color: darkcyan;">视频加载失败,刷新一下页面</h4>
         <div v-show="show" id="dplayer" style="width: 80%; height: 80%; margin: 0 auto;"></div>
     </div>
 </body>
