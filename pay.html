@@ -92,6 +92,10 @@
                             type: 'auto',
                             url: response.data.data
                         });
+                    } else {
+                        if (this.token) {
+                            localStorage.removeItem("token")
+                        }
                     }
                 })
             }
