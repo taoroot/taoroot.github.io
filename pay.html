@@ -9,20 +9,24 @@
     <script>Vue.component(VueQrcode.name, VueQrcode);</script>
     <link rel="stylesheet" href="https://cdn.flizi.cn/js/dplayer/DPlayer.min.css">
     <script src="https://cdn.flizi.cn/js/dplayer/DPlayer.min.js"></script>
-
+    <style>
+        .text {
+            text-align: center; 
+            color: darkcyan;
+        }
+    </style>
 </head>
 
 <body>
     <div id="app">
-        <div v-if="!show">
-            <h2>支持 微信/支付宝</h2>
-            <h2>如果已在其他电脑支付过, 只需重新扫一下二维码(不需要再次付款)</h2>
-            
+        <div v-if="!show" class="text">
+            <h4>支持 微信/支付宝</h4>
+            <h4>如果已在其他电脑支付过, 只需重新扫一下二维码(不需要再次付款)</h4>
             <div>
                 <qrcode :value="url" :options="{ width: 150 }">
             </qrcode></div>
         </div>
-        <h4 v-show="show" style="text-align: center; color: darkcyan;">视频加载失败,刷新一下页面</h4>
+        <h4 v-show="show" class="text">视频加载失败,刷新一下页面</h4>
         <div v-show="show" id="dplayer" style="width: 80%; height: 80%; margin: 0 auto;"></div>
     </div>
 </body>
